@@ -18,23 +18,29 @@ export default function RootLayout({ children }) {
         {/* Apply the saved / preferred theme before first paint to avoid a flash. */}
         <script dangerouslySetInnerHTML={{ __html: "(function(){try{var t=localStorage.getItem('cbo-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();" }} />
         <div className="topbar">
-          <span><Phone size={14} aria-hidden="true" /> <a href={`tel:${SITE.phone}`}>{SITE.phone}</a></span>
-          <span><Mail size={14} aria-hidden="true" /> <a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
-          <span><Clock size={14} aria-hidden="true" /> {SITE.hours}</span>
+          <div className="topbar-inner">
+            <span><Phone size={14} aria-hidden="true" /> <a href={`tel:${SITE.phone}`}>{SITE.phone}</a></span>
+            <span><Mail size={14} aria-hidden="true" /> <a href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
+            <span><Clock size={14} aria-hidden="true" /> {SITE.hours}</span>
+          </div>
         </div>
         <header className="header">
-          <a className="brand" href="/"><span className="brand-mark" aria-hidden="true">C</span>CHANDRABHUSHAN <span>ONLINE</span></a>
-          <nav className="nav" aria-label="Main navigation">
-            <a href="/">Home</a><a href="/about">About</a><a href="/services">Services</a>
-            <a href="/products">Products</a><a href="/gallery">Gallery</a><a href="/contact">Contact</a><a href="/admin">Admin</a>
-          </nav>
-          <span style={{ display: 'inline-flex', gap: '.5rem', alignItems: 'center' }}>
-            <ThemeToggle />
-            <a className="header-cta" href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={17} aria-hidden="true" /> WhatsApp</a>
-          </span>
+          <div className="header-inner">
+            <a className="brand" href="/"><span className="brand-mark" aria-hidden="true">C</span>CHANDRABHUSHAN <span>ONLINE</span></a>
+            <nav className="nav" aria-label="Main navigation">
+              <a href="/">Home</a><a href="/about">About</a><a href="/services">Services</a>
+              <a href="/products">Products</a><a href="/gallery">Gallery</a><a href="/contact">Contact</a><a href="/admin">Admin</a>
+            </nav>
+            <span style={{ display: 'inline-flex', gap: '.5rem', alignItems: 'center' }}>
+              <ThemeToggle />
+              <a className="header-cta" href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={17} aria-hidden="true" /> WhatsApp</a>
+            </span>
+          </div>
         </header>
         <div className="notice" aria-label="Notices">
-          {NOTICE_ITEMS.map((n) => <span key={n}>📢 {n}</span>)}
+          <div className="notice-inner">
+            {NOTICE_ITEMS.map((n) => <span key={n}>📢 {n}</span>)}
+          </div>
         </div>
         <main className="wrap">{children}</main>
         <footer className="footer">

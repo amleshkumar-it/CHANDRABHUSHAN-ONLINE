@@ -1,5 +1,5 @@
 export const dynamic = 'force-dynamic';
-import { ArrowRight, ShieldCheck, FileCheck, Clock, MessageCircle, Phone, Search, ClipboardList, Bell, Store } from 'lucide-react';
+import { ArrowRight, ShieldCheck, FileCheck, Clock, MessageCircle, Phone, Search, ClipboardList, Bell } from 'lucide-react';
 import { getServices, isSupabaseConfigured } from '../lib/supabase';
 import { SITE, serviceStatus, daysLeft, formatDate, whatsappLink } from '../lib/site';
 import ServiceIcon from '../components/ServiceIcon';
@@ -22,8 +22,9 @@ export default async function Home() {
   const presentCategories = Object.keys(byCategory);
   return (
     <>
-      {/* ── Hero ── */}
+      {/* ── Hero: full-bleed band, content on the shared 1280px grid ── */}
       <section className="hero reveal">
+        <div className="hero-inner">
         <div className="hero-text">
           <span className="hero-eyebrow">Trusted Online Service Centre</span>
           <h1>Your Digital Services, Simplified.</h1>
@@ -34,14 +35,30 @@ export default async function Home() {
           </div>
           <p className="muted">Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a> · Open: {SITE.hours}</p>
         </div>
-        <div className="hero-media">
-          <div className="hero-visual">
-            <img src="/shop.jpeg" alt="CHANDRABHUSHAN ONLINE shop" />
-            <div className="glass-card">
-              <span className="glass-icon"><Store size={22} aria-hidden="true" /></span>
-              <span><strong>CHANDRABHUSHAN ONLINE</strong><span>Visit us or chat on WhatsApp — open {SITE.hours}.</span></span>
-            </div>
+        <div className="hero-dashboard" aria-label="Latest services">
+          <div className="hero-dash-head">
+            <span><strong>Latest services</strong><span>From our live services list</span></span>
+            <span className="eyebrow">Live list</span>
           </div>
+          {services.length === 0 ? (
+            <p className="muted">No services yet. Check back soon!</p>
+          ) : (
+            <div className="hero-dash-rows">
+              {services.slice(0, 4).map((s) => (
+                <a className="hero-service-row" href={`/services/${s.id}`} key={s.id}>
+                  <span className="hero-service-icon"><ServiceIcon category={s.category} size={22} /></span>
+                  <span className="hero-service-text"><strong>{s.title}</strong><span>{s.category}</span></span>
+                  <span className={`badge ${serviceStatus(s)}`}>{serviceStatus(s)}</span>
+                </a>
+              ))}
+            </div>
+          )}
+          {services.length > 4 && <p className="muted" style={{ marginBottom: 0 }}><a href="/services">View all services</a></p>}
+          <div className="hero-dash-info">
+            <span><strong>CHANDRABHUSHAN ONLINE</strong><span>Open {SITE.hours} · Call <a href={`tel:${SITE.phone}`}>{SITE.phone}</a></span></span>
+            <a className="btn small teal" href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={16} aria-hidden="true" /> WhatsApp</a>
+          </div>
+        </div>
         </div>
       </section>
 

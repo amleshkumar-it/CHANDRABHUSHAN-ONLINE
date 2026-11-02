@@ -32,14 +32,20 @@ img{max-width:100%; height:auto}
 @keyframes fadeUp{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
 .reveal{animation:fadeUp .55s ease both}
 .reveal-1{animation-delay:.08s} .reveal-2{animation-delay:.16s} .reveal-3{animation-delay:.24s}
-.topbar{background:var(--navy); color:#e6edf6; padding:.55rem 1rem; font-size:.86rem;
+/* ONE shared grid: header, topbar, notice, main and footer all align to the
+   same 1280px container with the same side gutter. The old layout let the
+   header stretch full-width while the hero sat inside a narrower card, so
+   the hero looked like a small floating card in a sea of white space. */
+.topbar{background:var(--navy); color:#e6edf6; padding:.55rem 0; font-size:.86rem}
+.topbar-inner{max-width:1280px; margin:0 auto; padding:0 2rem;
   display:flex; gap:1.4rem; flex-wrap:wrap; justify-content:center; align-items:center}
 .topbar a{color:#fff; text-decoration:none; font-weight:600}
 .topbar a:hover{color:#fcd34d}
 .header{position:sticky; top:0; z-index:40; background:rgba(255,255,255,.88);
   backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line); box-shadow:var(--shadow-sm);
-  padding:.8rem 1.75rem; display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap; justify-content:space-between}
+  border-bottom:1px solid var(--line); box-shadow:var(--shadow-sm); padding:.8rem 0}
+.header-inner{max-width:1280px; margin:0 auto; padding:0 2rem;
+  display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap; justify-content:space-between}
 .brand{display:inline-flex; align-items:center; gap:.65rem; font-size:1.3rem; font-weight:800;
   color:var(--navy); text-decoration:none; letter-spacing:-.02em; line-height:1.1}
 .brand span{color:var(--royal)}
@@ -57,8 +63,10 @@ img{max-width:100%; height:auto}
 .header-cta:hover{transform:translateY(-1px); box-shadow:var(--shadow-md)}
 .notice{background:var(--saffron-soft); border-bottom:1px solid #fde68a; overflow:hidden;
   white-space:nowrap; padding:.55rem 0; font-size:.9rem; color:#92400e}
+.notice-inner{max-width:1280px; margin:0 auto; padding:0 2rem; overflow:hidden; white-space:nowrap}
 .notice span{margin:0 1.4rem; font-weight:600}
-.wrap{max-width:1180px; margin:0 auto; padding:2rem 1.5rem; width:100%; min-width:0}
+.notice span:first-child{margin-left:0}
+.wrap{max-width:1280px; margin:0 auto; padding:2rem 2rem; width:100%; min-width:0}
 main.wrap{padding-top:2.5rem; padding-bottom:3rem}
 .section{margin:4.5rem 0}
 .section-head{max-width:42rem; margin-bottom:2rem}
@@ -71,10 +79,39 @@ main.wrap{padding-top:2.5rem; padding-bottom:3rem}
   padding:2.5rem; box-shadow:var(--shadow-sm); margin-bottom:2.5rem}
 .page-head h1{font-size:clamp(1.8rem,3.5vw,2.5rem); margin-bottom:.35rem}
 .page-head p{color:var(--muted); margin-bottom:0}
-.hero{background:linear-gradient(180deg, var(--paper), var(--navy-soft));
-  border:1px solid var(--line); border-radius:28px; overflow:hidden;
-  display:grid; grid-template-columns:1.05fr .95fr; gap:0; box-shadow:var(--shadow-md)}
-.hero-text{padding:3.5rem 3.25rem}
+/* Full-bleed hero: it breaks out of main.wrap and spans the viewport, while
+   .hero-inner keeps its content on the same 1280px grid as the header and
+   the sections below. It is no longer a bordered card floating inside the
+   container. */
+.hero{background:linear-gradient(135deg, var(--navy-soft) 0%, var(--paper) 52%, var(--saffron-soft) 130%);
+  border:0; border-radius:0; overflow:hidden; box-shadow:none;
+  width:100vw; max-width:none; margin:-2.5rem calc(50% - 50vw) 0;
+  padding:4.5rem 0}
+.hero-inner{max-width:1280px; margin:0 auto; padding:0 2rem;
+  display:grid; grid-template-columns:1.02fr .98fr; gap:3.5rem; align-items:center}
+.hero-text{padding:0}
+/* Dashboard-style hero visual: real services only, no invented numbers. */
+.hero-dashboard{background:rgba(255,255,255,.78); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--line); border-radius:24px; padding:1.5rem; box-shadow:var(--shadow-lg)}
+.hero-dash-head{display:flex; gap:1rem; align-items:flex-start; justify-content:space-between; margin-bottom:1rem}
+.hero-dash-head strong{display:block; color:var(--navy); font-size:1.05rem; line-height:1.3}
+.hero-dash-head span span{display:block; color:var(--muted); font-size:.88rem; font-weight:400}
+.hero-dash-rows{display:grid; gap:.75rem}
+.hero-service-row{display:flex; gap:.85rem; align-items:center; background:var(--paper);
+  border:1px solid var(--line); border-radius:14px; padding:.85rem 1rem; text-decoration:none;
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease}
+.hero-service-row:hover{transform:translateY(-2px); box-shadow:var(--shadow-sm); border-color:var(--royal)}
+.hero-service-icon{width:42px; height:42px; flex:0 0 42px; display:inline-flex; align-items:center; justify-content:center;
+  background:var(--royal-soft); color:var(--royal); border-radius:12px}
+.hero-service-text{display:flex; flex-direction:column; min-width:0; flex:1}
+.hero-service-text strong{color:var(--navy); font-size:.95rem; line-height:1.35;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+.hero-service-text span{color:var(--muted); font-size:.85rem}
+.hero-service-row .badge{flex:0 0 auto}
+.hero-dash-info{margin-top:1rem; padding-top:1rem; border-top:1px solid var(--line);
+  display:flex; gap:1rem; align-items:center; justify-content:space-between; flex-wrap:wrap}
+.hero-dash-info strong{display:block; color:var(--navy); line-height:1.3}
+.hero-dash-info span span{display:block; color:var(--muted); font-size:.88rem}
 .hero-eyebrow{display:inline-block; background:var(--saffron-soft); color:var(--saffron-dark);
   border:1px solid #fde68a; padding:.35rem .85rem; border-radius:999px;
   font-size:.85rem; font-weight:800; letter-spacing:.02em}
@@ -190,11 +227,11 @@ tr:last-child th,tr:last-child td{border-bottom:0}
 .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--line);
   border-radius:12px; background:var(--paper); box-shadow:var(--shadow-sm); max-width:100%}
 .table-scroll table{border:0; border-radius:0; min-width:560px; box-shadow:none}
-.footer{background:var(--navy); color:#dbe6f3; margin-top:5rem; padding:3.5rem 1.75rem 2rem}
+.footer{background:var(--navy); color:#dbe6f3; margin-top:5rem; padding:3.5rem 0 2rem}
 .footer a{color:#ffe8d1; text-decoration:none}
 .footer a:hover{color:#fff; text-decoration:underline}
 .footer h3{color:#fff; font-size:1.05rem; padding-bottom:.5rem; border-bottom:2px solid var(--saffron); display:inline-block}
-.footer .wrap{display:grid; grid-template-columns:1.3fr 1fr 1fr 1.2fr; gap:3rem; padding:0}
+.footer .wrap{display:grid; grid-template-columns:1.3fr 1fr 1fr 1.2fr; gap:3rem; padding-top:0; padding-bottom:0}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.18); margin-top:2.75rem; padding-top:1.25rem; text-align:center; color:#b8c6d8; font-size:.9rem}
 .footer-brand{color:#fff; font-size:1.2rem; font-weight:800; letter-spacing:-.01em}
 .footer-brand span{color:var(--saffron)}
@@ -223,7 +260,10 @@ tr:last-child th,tr:last-child td{border-bottom:0}
 [data-theme="dark"] .nav a{color:#e6edf6}
 [data-theme="dark"] .nav a:hover{background:var(--navy-soft); color:#fff}
 [data-theme="dark"] .notice{background:var(--saffron-soft); border-color:#4a2e12; color:#fcd9a8}
-[data-theme="dark"] .hero{background:linear-gradient(180deg, var(--paper), #16233a)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg, #16233a 0%, var(--paper) 55%, #2b1d0e 130%)}
+[data-theme="dark"] .hero-dashboard{background:rgba(18,30,51,.85)}
+[data-theme="dark"] .hero-dash-head strong,[data-theme="dark"] .hero-service-text strong,[data-theme="dark"] .hero-dash-info strong{color:#f2f6fb}
+[data-theme="dark"] .hero-service-row{background:var(--paper)}
 [data-theme="dark"] .hero-eyebrow{background:var(--saffron-soft); color:#fbbf24; border-color:#4a2e12}
 [data-theme="dark"] .hero-checks li{color:#e6edf6}
 [data-theme="dark"] .trust-item strong,[data-theme="dark"] form label,[data-theme="dark"] th{color:#f2f6fb}
@@ -243,7 +283,8 @@ tr:last-child th,tr:last-child td{border-bottom:0}
 [data-theme="dark"] .filters a{background:var(--paper); color:#e6edf6}
 [data-theme="dark"] .filters a:hover,[data-theme="dark"] .filters a.active{background:var(--royal); color:#fff; border-color:var(--royal)}
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr}
+  .hero{padding:3rem 0}
+  .hero-inner{grid-template-columns:1fr; gap:2rem}
   .hero-media{order:-1; padding:1rem}
   .hero-media img,.hero-visual img{max-height:300px; min-height:0}
   .cards,.steps{grid-template-columns:repeat(2,1fr)}
@@ -251,21 +292,21 @@ tr:last-child th,tr:last-child td{border-bottom:0}
   .bento-card,.bento-card.wide{grid-column:span 1}
   .contact-grid{grid-template-columns:1fr}
   .footer .wrap{grid-template-columns:1fr 1fr}
-  .header{flex-direction:column; align-items:stretch; gap:.6rem}
-  .header .brand{align-self:flex-start}
-  .header .nav{width:100%; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:.25rem}
-  .header .nav::-webkit-scrollbar{display:none}
-  .header .nav a{flex:0 0 auto; white-space:nowrap}
+  .header-inner{flex-direction:column; align-items:stretch; gap:.6rem}
+  .header-inner .brand{align-self:flex-start}
+  .header-inner .nav{width:100%; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:.25rem}
+  .header-inner .nav::-webkit-scrollbar{display:none}
+  .header-inner .nav a{flex:0 0 auto; white-space:nowrap}
   .theme-toggle{align-self:flex-start}
 }
 @media(max-width:640px){
   .wrap{padding:1.5rem 1.25rem}
   main.wrap{padding-top:2rem; padding-bottom:5.5rem}
-  .header{padding:.75rem 1rem}
+  .header-inner,.topbar-inner,.notice-inner,.hero-inner{padding-left:1.25rem; padding-right:1.25rem}
   .brand{font-size:clamp(1rem,4.2vw,1.35rem)}
   .brand-mark{width:36px; height:36px; flex-basis:36px; font-size:1.1rem}
-  .hero{border-radius:20px}
-  .hero-text{padding:2rem 1.5rem}
+  .hero{padding:2.5rem 0; margin-top:-2rem}
+  .hero-text{padding:0}
   .hero-text h1{font-size:1.75rem}
   .hero-checks{grid-template-columns:1fr}
   .hero-actions .btn{width:100%}
@@ -291,7 +332,8 @@ tr:last-child th,tr:last-child td{border-bottom:0}
 }
 @media(max-width:375px){
   .wrap{padding:1.25rem 1rem}
-  .hero-text{padding:1.5rem 1rem}
+  .header-inner,.topbar-inner,.notice-inner,.hero-inner{padding-left:1rem; padding-right:1rem}
+  .hero-text{padding:0}
   .hero-text h1{font-size:1.5rem}
   .topbar{font-size:.78rem}
   .brand{font-size:.95rem}
@@ -299,9 +341,9 @@ tr:last-child th,tr:last-child td{border-bottom:0}
 }
 @media(max-width:320px){
   .wrap{padding:1rem .75rem}
-  .header{padding:.6rem .75rem}
-  .topbar{padding:.4rem .5rem}
-  .hero-text{padding:1.25rem .9rem}
+  .header-inner,.topbar-inner,.notice-inner,.hero-inner{padding-left:.75rem; padding-right:.75rem}
+  .topbar{padding-top:.4rem; padding-bottom:.4rem}
+  .hero-text{padding:0}
   .card,.bento-card{padding:1rem .9rem}
   .page-head{padding:1.25rem .9rem}
 }
