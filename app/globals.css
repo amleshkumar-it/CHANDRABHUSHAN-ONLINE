@@ -37,15 +37,16 @@ img{max-width:100%; height:auto}
    header stretch full-width while the hero sat inside a narrower card, so
    the hero looked like a small floating card in a sea of white space. */
 .topbar{background:var(--navy); color:#e6edf6; padding:.55rem 0; font-size:.86rem}
-.topbar-inner{max-width:1280px; margin:0 auto; padding:0 2rem;
+.topbar-inner{max-width:1680px; margin:0 auto; padding:0 3rem;
   display:flex; gap:1.4rem; flex-wrap:wrap; justify-content:center; align-items:center}
 .topbar a{color:#fff; text-decoration:none; font-weight:600}
 .topbar a:hover{color:#fcd34d}
 .header{position:sticky; top:0; z-index:40; background:rgba(255,255,255,.88);
   backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line); box-shadow:var(--shadow-sm); padding:.8rem 0}
-.header-inner{max-width:1280px; margin:0 auto; padding:0 2rem;
+.header-inner{max-width:1680px; margin:0 auto; padding:0 3rem;
   display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap; justify-content:space-between}
+.header-inner>span:last-child{margin-left:auto}
 .brand{display:inline-flex; align-items:center; gap:.65rem; font-size:1.3rem; font-weight:800;
   color:var(--navy); text-decoration:none; letter-spacing:-.02em; line-height:1.1}
 .brand span{color:var(--royal)}
@@ -63,10 +64,10 @@ img{max-width:100%; height:auto}
 .header-cta:hover{transform:translateY(-1px); box-shadow:var(--shadow-md)}
 .notice{background:var(--saffron-soft); border-bottom:1px solid #fde68a; overflow:hidden;
   white-space:nowrap; padding:.55rem 0; font-size:.9rem; color:#92400e}
-.notice-inner{max-width:1280px; margin:0 auto; padding:0 2rem; overflow:hidden; white-space:nowrap}
+.notice-inner{max-width:1680px; margin:0 auto; padding:0 3rem; overflow:hidden; white-space:nowrap}
 .notice span{margin:0 1.4rem; font-weight:600}
 .notice span:first-child{margin-left:0}
-.wrap{max-width:1280px; margin:0 auto; padding:2rem 2rem; width:100%; min-width:0}
+.wrap{max-width:1440px; margin:0 auto; padding:2rem 2.5rem; width:100%; min-width:0}
 main.wrap{padding-top:2.5rem; padding-bottom:3rem}
 .section{margin:4.5rem 0}
 .section-head{max-width:42rem; margin-bottom:2rem}
@@ -87,8 +88,8 @@ main.wrap{padding-top:2.5rem; padding-bottom:3rem}
   border:0; border-radius:0; overflow:hidden; box-shadow:none;
   width:100vw; max-width:none; margin:-2.5rem calc(50% - 50vw) 0;
   padding:4.5rem 0}
-.hero-inner{max-width:1280px; margin:0 auto; padding:0 2rem;
-  display:grid; grid-template-columns:1.02fr .98fr; gap:3.5rem; align-items:center}
+.hero-inner{max-width:none; margin:0 auto; padding:0 3rem;
+  display:grid; grid-template-columns:1.02fr .98fr; gap:4rem; align-items:center}
 .hero-text{padding:0}
 /* Dashboard-style hero visual: real services only, no invented numbers. */
 .hero-dashboard{background:rgba(255,255,255,.78); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
@@ -135,7 +136,7 @@ main.wrap{padding-top:2.5rem; padding-bottom:3rem}
 .glass-card span{color:var(--muted); font-size:.9rem}
 .glass-icon{width:44px; height:44px; flex:0 0 44px; display:inline-flex; align-items:center; justify-content:center;
   background:var(--royal); color:#fff; border-radius:12px}
-.trust{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin:2.5rem 0 0}
+.trust{display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin:2.5rem 0 0}
 .trust-item{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:1.5rem 1.75rem;
   box-shadow:var(--shadow-sm); display:flex; gap:.85rem; align-items:flex-start; transition:transform .18s ease, box-shadow .18s ease}
 .trust-item:hover{transform:translateY(-3px); box-shadow:var(--shadow-md)}
@@ -288,6 +289,7 @@ tr:last-child th,tr:last-child td{border-bottom:0}
   .hero-media{order:-1; padding:1rem}
   .hero-media img,.hero-visual img{max-height:300px; min-height:0}
   .cards,.steps{grid-template-columns:repeat(2,1fr)}
+  .trust{grid-template-columns:repeat(2,1fr)}
   .bento{grid-template-columns:repeat(2,1fr)}
   .bento-card,.bento-card.wide{grid-column:span 1}
   .contact-grid{grid-template-columns:1fr}
