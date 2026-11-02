@@ -12,6 +12,18 @@ export default function About() {
       <div className="hero-media" style={{ padding: 0, marginBottom: '2rem' }}>
         <div style={{ position: 'relative', height: 380, overflow: 'hidden', borderRadius: 20 }}><Image src="/shop.jpeg" alt="CHANDRABHUSHAN ONLINE shop" fill style={{ objectFit: 'cover' }} sizes="(max-width: 900px) 100vw, 1160px" priority /></div>
       </div>
+      <div className="cards" style={{ marginBottom: '2rem' }}>
+        <div className="card">
+          <Image src="/owner.jpg" alt="At CHANDRABHUSHAN ONLINE" width={900} height={834} style={{ width: '100%', height: 'auto', borderRadius: 8, marginBottom: '.75rem' }} />
+          <h3>At CHANDRABHUSHAN ONLINE</h3>
+          <p>Visit the shop for help with forms, jobs, admit cards and results — open 9 AM to 7 PM.</p>
+        </div>
+        <div className="card">
+          <h3>What we help with</h3>
+          <p>Government and digital services, explained in simple language, step by step — with the correct information and documents.</p>
+          <p><a className="btn small" href="/services">View Services</a></p>
+        </div>
+      </div>
       <p>CHANDRABHUSHAN ONLINE is a local online service centre. People often find government and digital work difficult online — how to fill in a form, which documents are needed, and when the last date is. That is exactly what we help with.</p>
       <section className="section">
         <div className="section-head"><span className="eyebrow">Why choose us?</span><h2>Clear help, step by step</h2></div>
