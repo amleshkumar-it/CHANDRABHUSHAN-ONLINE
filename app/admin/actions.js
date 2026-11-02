@@ -8,17 +8,25 @@ function num(v) { const n = Number(v); return isNaN(n) ? null : n; }
 function str(v) { return String(v || '').trim(); }
 
 export async function loginAdmin(formData) {
-  const sb = getServerSupabase();
+  // Never throw from login: return a friendly error instead, so a Supabase
+  // outage shows "Login failed" in the form, not a server exception page.
+  // redirect() stays outside the try/catch on purpose (it throws by design).
+  let sb = null;
+  try { sb = getServerSupabase(); } catch { sb = null; }
   if (!sb) return { ok: false, error: 'Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel, and ADMIN_EMAILS.' };
   const email = str(formData.get('email')); const password = String(formData.get('password') || '');
-  const { error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) return { ok: false, error: 'Login failed. Please check your email and password.' };
-  const user = await getAdminUser();
-  if (!user) { await sb.auth.signOut(); return { ok: false, error: 'This email is not on the admin list (ADMIN_EMAILS). Access denied.' }; }
+  try {
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) return { ok: false, error: 'Login failed. Please check your email and password.' };
+    const user = await getAdminUser();
+    if (!user) { try { await sb.auth.signOut(); } catch {} return { ok: false, error: 'This email is not on the admin list (ADMIN_EMAILS). Access denied.' }; }
+  } catch {
+    return { ok: false, error: 'Login failed. Please check your email and password, then try again.' };
+  }
   redirect('/admin/dashboard');
 }
 export async function logoutAdmin() {
-  const sb = getServerSupabase(); if (sb) await sb.auth.signOut();
+  try { const sb = getServerSupabase(); if (sb) await sb.auth.signOut(); } catch {}
   redirect('/admin');
 }
 async function adminClient() {

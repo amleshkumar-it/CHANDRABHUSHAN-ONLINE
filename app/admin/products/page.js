@@ -4,7 +4,9 @@ import { getAdminUser } from '../../../lib/supabase-server';
 import { getProducts } from '../../../lib/supabase';
 import { saveProduct, deleteProduct } from '../actions';
 export default async function AdminProducts() {
-  const user = await getAdminUser(); if (!user) redirect('/admin');
+  let user = null;
+  try { user = await getAdminUser(); } catch { user = null; }
+  if (!user) redirect('/admin');
   const products = await getProducts();
   return (
     <>

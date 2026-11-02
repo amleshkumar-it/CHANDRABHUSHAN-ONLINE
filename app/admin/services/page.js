@@ -5,7 +5,9 @@ import { getServices } from '../../../lib/supabase';
 import { saveService, deleteService } from '../actions';
 import { CATEGORIES } from '../../../lib/site';
 export default async function AdminServices() {
-  const user = await getAdminUser(); if (!user) redirect('/admin');
+  let user = null;
+  try { user = await getAdminUser(); } catch { user = null; }
+  if (!user) redirect('/admin');
   const services = await getServices();
   return (
     <>

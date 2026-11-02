@@ -188,3 +188,63 @@ tr:last-child th,tr:last-child td{border-bottom:0}
 @media(prefers-reduced-motion:reduce){
   *{transition:none !important; scroll-behavior:auto !important}
 }
+
+/* ── Mobile polish (Nov 2026): no horizontal overflow, clean nav, usable forms/tables ── */
+/* Clip horizontal overflow without creating a scroll container (so the sticky
+   header keeps working). Long emails/URLs wrap instead of pushing the page. */
+html,body{overflow-x:clip}
+img{max-width:100%; height:auto}
+.wrap{width:100%; min-width:0}
+.card,.hero-text,td{overflow-wrap:break-word; word-break:break-word}
+.notice{max-width:100%}
+.topbar a{overflow-wrap:anywhere}
+
+/* Horizontally scrollable tables (admin dashboard + inquiries). The table
+   keeps its natural width and scrolls inside the card instead of breaking
+   the page on a phone. */
+.table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--line);
+  border-radius:12px; background:var(--paper); box-shadow:var(--shadow-sm); max-width:100%}
+.table-scroll table{border:0; border-radius:0; min-width:560px; box-shadow:none}
+
+@media(max-width:900px){
+  /* Header: brand on its own row, nav as ONE clean swipeable row — never a
+     messy multi-line wrap. */
+  .header{flex-direction:column; align-items:stretch; gap:.6rem}
+  .header .brand{align-self:flex-start}
+  .header .nav{width:100%; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none; padding-bottom:.25rem}
+  .header .nav::-webkit-scrollbar{display:none}
+  .header .nav a{flex:0 0 auto; white-space:nowrap}
+  /* Hero image: present, not dominant, on tablets/phones. */
+  .hero-media img{max-height:260px}
+}
+
+@media(max-width:640px){
+  .brand{font-size:clamp(1rem,4.2vw,1.35rem)}
+  .brand-mark{width:36px; height:36px; flex-basis:36px; font-size:1.1rem}
+  .topbar{font-size:.8rem; gap:.4rem 1rem}
+  .hero{border-radius:16px}
+  .hero-text{padding:1.25rem 1.1rem 1.5rem}
+  .hero-text h1{font-size:1.75rem}
+  .hero-media{padding:.75rem}
+  .hero-media img{max-height:220px}
+  .hero-actions .btn{width:100%}
+  .card{padding:1.1rem}
+  .card img{height:170px}
+  .page-head{padding:1.25rem 1.1rem}
+  /* Admin tables/forms: full-width inputs, scrollable tables, readable cells. */
+  form input,form select,form textarea{font-size:16px} /* avoids iOS auto-zoom on focus */
+  th,td{font-size:.88rem}
+  /* Floating WhatsApp must not cover the footer/content at the page bottom. */
+  main.wrap{padding-bottom:5rem}
+  .footer{padding-bottom:4.75rem}
+  .wa{right:12px; bottom:12px; width:52px; height:52px; font-size:25px}
+}
+
+@media(max-width:480px){
+  /* Stacked full-width primary actions on the smallest phones, but keep
+     small table buttons compact so they stay usable inside .table-scroll. */
+  .btn:not(.small){width:100%}
+  .hero-text h1{font-size:1.6rem}
+  .topbar{justify-content:center; text-align:center}
+}

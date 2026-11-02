@@ -5,7 +5,9 @@ import { getService } from '../../../../lib/supabase';
 import { saveService } from '../../actions';
 import { CATEGORIES } from '../../../../lib/site';
 export default async function EditService({ params }) {
-  const user = await getAdminUser(); if (!user) redirect('/admin');
+  let user = null;
+  try { user = await getAdminUser(); } catch { user = null; }
+  if (!user) redirect('/admin');
   const s = await getService(params.id); if (!s) return notFound();
   return (
     <>
