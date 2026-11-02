@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* CHANDRABHUSHAN ONLINE — Sarkari-updates-portal design system.
    Light grey page background, white content areas, dense information-first
    layout, bold headings and bold list links. Plain CSS only.
