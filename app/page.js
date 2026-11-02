@@ -1,7 +1,7 @@
 export const revalidate = 60;
 import { ArrowRight, ShieldCheck, FileCheck, Clock, MessageCircle, Phone, Search, ClipboardList, Bell } from 'lucide-react';
 import { getServices, isSupabaseConfigured } from '../lib/supabase';
-import { SITE, serviceStatus, daysLeft, formatDate, whatsappLink } from '../lib/site';
+import { SITE, CATEGORIES, serviceStatus, daysLeft, formatDate, whatsappLink } from '../lib/site';
 import ServiceIcon from '../components/ServiceIcon';
 
 function statusBadges(s) {
@@ -62,11 +62,67 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ── Trust strip ── */}
-      <section className="trust reveal reveal-1" aria-label="Service information">
-        <div className="trust-item"><span className="trust-icon"><Phone size={22} aria-hidden="true" /></span><div><strong>Call us</strong><span><a href={`tel:${SITE.phone}`}>{SITE.phone}</a></span></div></div>
-        <div className="trust-item"><span className="trust-icon"><Clock size={22} aria-hidden="true" /></span><div><strong>Open hours</strong><span>{SITE.hours}</span></div></div>
-        <div className="trust-item"><span className="trust-icon"><ShieldCheck size={22} aria-hidden="true" /></span><div><strong>Careful, honest help</strong><span>No false promises — just clear guidance</span></div></div>
+      {/* ── Latest Updates: portal-style columns, real services only ── */}
+      <section className="section reveal reveal-1" aria-label="Latest Updates">
+        <div className="section-head">
+          <span className="eyebrow">Latest Updates</span>
+          <h2>Latest Updates</h2>
+          <p>New jobs, admit cards and results, grouped by category. Open any item for dates, documents and the official link.</p>
+        </div>
+        <div className="updates-grid">
+          {[
+            { cat: 'Job', label: 'Latest Jobs' },
+            { cat: 'Admit Card', label: 'Admit Cards' },
+            { cat: 'Result', label: 'Results' },
+          ].map(({ cat, label }) => {
+            const items = (byCategory[cat] || []).slice(0, 4);
+            return (
+              <article className="updates-col" key={cat}>
+                <div className="updates-col-head">
+                  <span className="bento-icon"><ServiceIcon category={cat} size={22} /></span>
+                  <h3>{label}</h3>
+                </div>
+                {items.length === 0 ? (
+                  <p className="muted">No updates yet. Check back soon!</p>
+                ) : (
+                  <ul className="updates-list">
+                    {items.map((s) => (
+                      <li key={s.id}>
+                        <a href={`/services/${s.id}`}>{s.title}</a>
+                        <span className="updates-meta">
+                          <span className={`badge ${serviceStatus(s)}`}>{serviceStatus(s)}</span>
+                          {s.end_date ? <span>Last date: {formatDate(s.end_date)}</span> : s.start_date ? <span>Start: {formatDate(s.start_date)}</span> : null}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <p><a href={`/services?category=${encodeURIComponent(cat)}`}>View all {label} <ArrowRight size={16} aria-hidden="true" /></a></p>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ── Category boxes: real categories, real counts only ── */}
+      <section className="section reveal reveal-2" aria-label="Browse by category">
+        <div className="section-head">
+          <span className="eyebrow">Categories</span>
+          <h2>Browse updates by category</h2>
+          <p>Pick a category to see only those updates. The number shown is the number of live services in that category right now.</p>
+        </div>
+        <div className="category-boxes">
+          {CATEGORIES.map((c) => {
+            const count = (byCategory[c] || []).length;
+            return (
+              <a className="category-box" href={`/services?category=${encodeURIComponent(c)}`} key={c}>
+                <span className="bento-icon"><ServiceIcon category={c} size={24} /></span>
+                <strong>{c}</strong>
+                <span>{count === 0 ? 'No updates yet' : `${count} service${count === 1 ? '' : 's'}`}</span>
+              </a>
+            );
+          })}
+        </div>
       </section>
 
       {/* ── Services: premium Bento Grid, real data only ── */}
@@ -95,39 +151,11 @@ export default async function Home() {
         <p style={{ marginTop: '1.5rem' }}><a className="btn" href="/services">View All Services</a></p>
       </section>
 
-      {/* ── Latest Updates: only categories that really exist ── */}
-      <section className="section reveal reveal-3">
-        <div className="section-head">
-          <span className="eyebrow">Latest Updates</span>
-          <h2>Government notifications, as they come in</h2>
-          <p>Use a category to see only that type of update. More updates are added regularly as new notifications are published.</p>
-        </div>
-        <nav className="filters" aria-label="Filter updates by category">
-          <a href="/services" className="active">All Updates</a>
-          {presentCategories.map((c) => (
-            <a key={c} href={`/services?category=${encodeURIComponent(c)}`}>{c}</a>
-          ))}
-        </nav>
-        {services.length === 0 ? (
-          <div className="empty"><strong>No updates yet.</strong><span>Check back soon!</span></div>
-        ) : (
-          presentCategories.map((cat) => (
-            <div key={cat} style={{ marginBottom: '2rem' }}>
-              <h3>{cat}</h3>
-              <div className="cards">
-                {byCategory[cat].slice(0, 3).map((s) => (
-                  <article className="card" key={s.id}>
-                    {statusBadges(s)}
-                    <h3>{s.title}</h3>
-                    <p>{s.short_description}</p>
-                    <p><small>Start: {formatDate(s.start_date)} · Last date: {formatDate(s.end_date)}</small></p>
-                    <a className="btn small" href={`/services/${s.id}`}>View Details</a>
-                  </article>
-                ))}
-              </div>
-            </div>
-          ))
-        )}
+      {/* ── Trust strip ── */}
+      <section className="trust reveal reveal-1" aria-label="Service information">
+        <div className="trust-item"><span className="trust-icon"><Phone size={22} aria-hidden="true" /></span><div><strong>Call us</strong><span><a href={`tel:${SITE.phone}`}>{SITE.phone}</a></span></div></div>
+        <div className="trust-item"><span className="trust-icon"><Clock size={22} aria-hidden="true" /></span><div><strong>Open hours</strong><span>{SITE.hours}</span></div></div>
+        <div className="trust-item"><span className="trust-icon"><ShieldCheck size={22} aria-hidden="true" /></span><div><strong>Careful, honest help</strong><span>No false promises — just clear guidance</span></div></div>
       </section>
 
       {/* ── Why choose us ── */}
@@ -138,10 +166,10 @@ export default async function Home() {
           <p>Simple, careful help with online work — nothing hidden, nothing exaggerated.</p>
         </div>
         <div className="cards">
-          <div className="card"><span className="bento-icon"><FileCheck size={24} aria-hidden="true" /></span><h3>Correct documents, checked</h3><p>We guide you through the documents each form asks for, so you do not miss a step.</p></div>
-          <div className="card"><span className="bento-icon"><Clock size={24} aria-hidden="true" /></span><h3>On-time support</h3><p>We help you apply before the last date, and keep you informed about what happens next.</p></div>
+          <div className="card"><span className="bento-icon"><FileCheck size={24} aria-hidden="true" /></span><h3>Fast updates from official links</h3><p>Updates are shared with their official links, so you can check the source yourself before applying.</p></div>
+          <div className="card"><span className="bento-icon"><Search size={24} aria-hidden="true" /></span><h3>Easy language, mobile-friendly</h3><p>Updates and guidance in plain, easy language, and this site works well on a mobile phone.</p></div>
+          <div className="card"><span className="bento-icon"><ShieldCheck size={24} aria-hidden="true" /></span><h3>Free to browse updates</h3><p>Browsing updates on this site is free. If you take our help with a service, we will explain the process first.</p></div>
           <div className="card"><span className="bento-icon"><MessageCircle size={24} aria-hidden="true" /></span><h3>Phone &amp; WhatsApp support</h3><p>Reach us by phone, email or WhatsApp during open hours — {SITE.hours}.</p></div>
-          <div className="card"><span className="bento-icon"><ShieldCheck size={24} aria-hidden="true" /></span><h3>Honest guidance</h3><p>We explain what a service can and cannot do, in plain language, before you apply.</p></div>
         </div>
       </section>
 
@@ -157,6 +185,22 @@ export default async function Home() {
           <div className="step"><span className="step-icon"><Bell size={24} aria-hidden="true" /></span><span className="step-num">3</span><h3>Get help and updates</h3><p>We help you complete the form and stay in touch about admit cards, results and next steps.</p></div>
         </div>
         <p className="muted">Note: We are not a government department. We are a local service centre that helps you fill in online forms.</p>
+      </section>
+
+      {/* ── Frequently Asked Questions ── */}
+      <section className="section">
+        <div className="section-head">
+          <span className="eyebrow">FAQ</span>
+          <h2>Frequently Asked Questions</h2>
+          <p>Short, clear answers about how CHANDRABHUSHAN ONLINE works.</p>
+        </div>
+        <div className="faq">
+          <div className="card"><h3>Is CHANDRABHUSHAN ONLINE a government website?</h3><p>No. CHANDRABHUSHAN ONLINE is an independent local service centre. It is not a government department and is not affiliated with any government department. Always verify information on the official website before applying.</p></div>
+          <div className="card"><h3>How do I apply for a job or form through you?</h3><p>Open the job or form from the Services list, check its dates and official link, then use its inquiry form or message us on WhatsApp. We will guide you through the application steps and the documents needed.</p></div>
+          <div className="card"><h3>How do I download an admit card or check a result?</h3><p>Open the admit card or result from the Services list and use its official link. If you need help, message us on WhatsApp and we will guide you through the steps.</p></div>
+          <div className="card"><h3>Is browsing updates free?</h3><p>Yes. Browsing updates on this site is free. You can read the latest jobs, admit cards and results here without paying anything.</p></div>
+          <div className="card"><h3>Do you guarantee a job or selection?</h3><p>No. No one can guarantee a job or selection. We only help you apply correctly and on time; the final decision is made by the recruiting body.</p></div>
+        </div>
       </section>
 
       {/* ── Contact (real info + real flows, no fake form) ── */}
@@ -177,6 +221,11 @@ export default async function Home() {
             <p><a className="btn" href="/contact">Open Inquiry Form</a> <a className="btn outline" href="/services">Browse Services</a></p>
           </div>
         </div>
+      </section>
+      {/* ── Disclaimer ── */}
+      <section className="disclaimer" aria-label="Disclaimer">
+        <h2>Important Disclaimer</h2>
+        <p>CHANDRABHUSHAN ONLINE is an independent service centre and is not affiliated with any government department. Information on this site comes from official links, but details can change — always verify on the official website before applying for any job, form, admit card or result. We do not guarantee any job or selection. Beware of fraud: do not pay anyone who asks for money in the name of a job, and do not share passwords or one-time codes with strangers.</p>
       </section>
     </>
   );

@@ -13,7 +13,7 @@ export default async function ServicesPage({ searchParams }) {
       <div className="page-head">
         <span className="eyebrow">Services</span>
         <h1>Services &amp; Latest Updates</h1>
-        <p>Browse every available service. Use a category to narrow the list, then open a card for dates, documents and the apply link.</p>
+        <p>Latest updates in one place — jobs, admit cards, results, forms and scholarships. Use a category to narrow the list, then open a card for dates, documents and the official link. Always verify on the official website before applying.</p>
       </div>
       <nav className="filters" aria-label="Filter services by category">
         <a href="/services" className={!category ? 'active' : ''}>All</a>

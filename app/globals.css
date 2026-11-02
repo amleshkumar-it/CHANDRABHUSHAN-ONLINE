@@ -228,6 +228,29 @@ tr:last-child th,tr:last-child td{border-bottom:0}
 .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--line);
   border-radius:12px; background:var(--paper); box-shadow:var(--shadow-sm); max-width:100%}
 .table-scroll table{border:0; border-radius:0; min-width:560px; box-shadow:none}
+/* ── Updates portal: Latest Updates columns, category boxes, FAQ, disclaimer ── */
+.updates-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.75rem}
+.updates-col{background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:1.5rem 1.5rem 1.25rem; box-shadow:var(--shadow-sm)}
+.updates-col-head{display:flex; align-items:center; gap:.75rem; margin-bottom:1rem}
+.updates-col-head h3{margin:0}
+.updates-list{list-style:none; padding:0; margin:0 0 1rem; display:grid; gap:1rem}
+.updates-list li{border-bottom:1px solid var(--line); padding-bottom:1rem}
+.updates-list li:last-child{border-bottom:0; padding-bottom:0}
+.updates-list li a{font-weight:650; text-decoration:none; display:block; line-height:1.4}
+.updates-list li a:hover{text-decoration:underline}
+.updates-meta{display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; margin-top:.4rem; color:var(--muted); font-size:.88rem}
+.category-boxes{display:grid; grid-template-columns:repeat(5,1fr); gap:1.25rem}
+.category-box{background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:1.25rem 1rem; text-decoration:none; display:flex; flex-direction:column; align-items:flex-start; gap:.4rem; transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease}
+.category-box:hover{transform:translateY(-3px); box-shadow:var(--shadow-md); border-color:var(--royal)}
+.category-box strong{color:var(--navy)}
+.category-box span:last-child{color:var(--muted); font-size:.88rem}
+.faq{display:grid; gap:1.25rem}
+.faq .card{padding:1.5rem 1.75rem}
+.faq h3{margin-bottom:.35rem}
+.disclaimer{background:var(--navy); color:#dbe6f3; border-radius:20px; padding:2rem 2.25rem; margin:4.5rem 0 0}
+.disclaimer h2{color:#fff; margin-bottom:.5rem}
+.disclaimer p{margin-bottom:0; line-height:1.7}
+
 .footer{background:var(--navy); color:#dbe6f3; margin-top:5rem; padding:3.5rem 0 2rem}
 .footer a{color:#ffe8d1; text-decoration:none}
 .footer a:hover{color:#fff; text-decoration:underline}
@@ -293,6 +316,8 @@ tr:last-child th,tr:last-child td{border-bottom:0}
   .bento{grid-template-columns:repeat(2,1fr)}
   .bento-card,.bento-card.wide{grid-column:span 1}
   .contact-grid{grid-template-columns:1fr}
+  .updates-grid{grid-template-columns:1fr}
+  .category-boxes{grid-template-columns:repeat(2,1fr)}
   .footer .wrap{grid-template-columns:1fr 1fr}
   .header-inner{flex-direction:column; align-items:stretch; gap:.6rem}
   .header-inner .brand{align-self:flex-start}
