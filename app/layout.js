@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
           <span>🕘 {SITE.hours}</span>
         </div>
         <header className="header">
-          <a className="brand" href="/">CHANDRABHUSHAN <span>ONLINE</span></a>
+          <a className="brand" href="/"><span className="brand-mark" aria-hidden="true">C</span>CHANDRABHUSHAN <span>ONLINE</span></a>
           <nav className="nav">
             <a href="/">Home</a><a href="/about">About</a><a href="/services">Services / सेवाएँ</a>
             <a href="/products">Products</a><a href="/gallery">Gallery</a><a href="/contact">Contact</a><a href="/admin">Admin</a>
@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
             <div><h3>Quick Links</h3><p><a href="/services">Services</a> · <a href="/products">Products</a> · <a href="/gallery">Gallery</a> · <a href="/contact">Contact</a></p></div>
             <div><h3>Contact / संपर्क</h3><p>Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a><br />Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br /><a href={whatsappLink('Namaste, mujhe online service ke baare me jaankari chahiye.')}>WhatsApp par baat karein</a></p></div>
           </div>
-          <p style={{ textAlign: 'center' }}>© {new Date().getFullYear()} CHANDRABHUSHAN ONLINE. All rights reserved.</p>
+          <p className="footer-bottom">© {new Date().getFullYear()} CHANDRABHUSHAN ONLINE. All rights reserved.</p>
         </footer>
         <a className="wa" href={whatsappLink('Namaste, mujhe online service ke baare me jaankari chahiye.')} aria-label="Chat on WhatsApp">💬</a>
       </body>
