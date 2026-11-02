@@ -28,7 +28,7 @@ export default async function Dashboard() {
     <>
       <div className="page-head"><h1>Admin Dashboard</h1></div><p>Logged in as: {user.email}</p>
       <form action={logoutAdmin}><button className="btn outline small" type="submit">Logout</button></form>
-      <p><a className="btn" href="/admin/services">Manage Services</a> <a className="btn" href="/admin/products">Manage Products</a> <a className="btn" href="/admin/inquiries">Manage Inquiries</a></p>
+      <p className="admin-actions"><a className="btn" href="/admin/services">Manage Services</a> <a className="btn" href="/admin/products">Manage Products</a> <a className="btn" href="/admin/inquiries">Manage Inquiries</a></p>
       <div className="cards">
         <div className="card"><h3>Services</h3><p style={{ fontSize: '2rem' }}>{services}</p></div>
         <div className="card"><h3>Products</h3><p style={{ fontSize: '2rem' }}>{products}</p></div>
