@@ -341,3 +341,5 @@ tr:last-child th,tr:last-child td{border-bottom:0}
 .btn:hover{transform:translateY(-1px)}
 nav a{transition:background-color .15s ease}
 .wa{animation:cboPulse 3s ease-in-out infinite}
+
+.site-search-input::placeholder{color:var(--muted); opacity:1}

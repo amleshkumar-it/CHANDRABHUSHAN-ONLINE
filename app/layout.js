@@ -26,14 +26,14 @@ export default function RootLayout({ children }) {
             <Link className="flex items-center gap-3 text-[var(--ink)] no-underline hover:no-underline" href="/">
               <span className="w-10 h-10 sm:w-12 sm:h-12 flex-none inline-flex items-center justify-center bg-tealBrand text-white rounded-lg text-xl sm:text-2xl font-extrabold" aria-hidden="true">C</span>
               <span className="flex flex-col leading-tight">
-                <span className="text-[1.3rem] sm:text-[1.55rem] font-extrabold tracking-tight text-navy leading-none">CHANDRABHUSHAN <span className="text-tealBrand">ONLINE</span></span>
+                <span className="text-[1.3rem] sm:text-[1.55rem] font-extrabold tracking-tight text-navy dark:text-white leading-none">CHANDRABHUSHAN <span className="text-tealBrand">ONLINE</span></span>
                 <span className="text-xs sm:text-sm text-[var(--muted)] font-normal">{SITE.tagline}</span>
               </span>
             </Link>
             <div className="flex gap-3 items-center flex-wrap w-full lg:w-auto">
-              <form className="flex items-center bg-[#eef1f5] border border-[var(--line)] rounded-full pl-3.5 pr-0.5 py-0.5 flex-1" action="/services" method="get" role="search">
+              <form className="flex items-center bg-[#eef1f5] dark:bg-[#1a2a44] border border-[var(--line)] rounded-full pl-3.5 pr-0.5 py-0.5 flex-1" action="/services" method="get" role="search">
                 <label className="sr-only" htmlFor="site-search">Search services</label>
-                <input className="border-0 bg-transparent min-w-0 flex-1 h-[38px] outline-none text-[var(--ink)]" id="site-search" type="search" name="q" placeholder="Search jobs, admit cards, results…" aria-label="Search services" />
+                <input className="site-search-input border-0 bg-transparent min-w-0 flex-1 h-[38px] outline-none text-[var(--ink)]" style={{ background: 'transparent' }} id="site-search" type="search" name="q" placeholder="Search jobs, admit cards, results…" aria-label="Search services" />
                 <button className="border-0 bg-tealBrand hover:bg-tealDark text-white rounded-full w-[38px] h-[38px] inline-flex items-center justify-center cursor-pointer flex-none" type="submit" aria-label="Search"><Search size={17} aria-hidden="true" /></button>
               </form>
               <ThemeToggle />
