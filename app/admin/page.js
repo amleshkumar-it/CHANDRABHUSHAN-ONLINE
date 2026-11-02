@@ -18,5 +18,5 @@ export default async function AdminHome() {
   if (!isSupabaseEnvConfigured()) {
     return (<><h1>Admin Panel</h1><p className="alert">Supabase not configured. Set NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY and ADMIN_EMAILS in your environment (Vercel env vars), run supabase/schema.sql, and create an admin user in Supabase Auth first. See README.</p></>);
   }
-  return (<><h1>Admin Login</h1>{authFailed && <p className="alert">Login check me kuch gadbad hui hai, please dobara try karein. Agar problem baar-baar aaye to is site ki cookies clear karke dobara kholein.</p>}<LoginForm /></>);
+  return (<><h1>Admin Login</h1>{authFailed && <p className="alert">Something went wrong while checking your login. Please try again. If the problem keeps happening, clear this site's cookies and open it again.</p>}<LoginForm /></>);
 }

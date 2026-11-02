@@ -9,7 +9,7 @@ export default function LoginForm() {
       <label>Password</label><input name="password" type="password" required />
       <p><button className="btn" type="submit">Login to Admin</button></p>
       {state?.error && <p className="alert" style={{ color: '#b42318' }}>{state.error}</p>}
-      <p className="muted">Admin account Supabase Auth me banana hoga (Supabase Dashboard → Authentication → Users). Sirf ADMIN_EMAILS list wale emails login kar sakte hain.</p>
+      <p className="muted">The admin account must be created in Supabase Auth (Supabase Dashboard → Authentication → Users). Only emails on the ADMIN_EMAILS list can log in.</p>
     </form>
   );
 }

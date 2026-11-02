@@ -5,7 +5,7 @@ export default async function ProductsPage() {
   return (
     <>
       <h1>Products</h1>
-      {!isSupabaseConfigured() && <p className="alert">Database abhi connect nahi hai, isliye koi product list nahi dikh rahi.</p>}
+      {!isSupabaseConfigured() && <p className="alert">The database is not connected yet, so no products are shown here.</p>}
       {products.length === 0 ? <p>No products yet. Check back soon!</p> : (
         <div className="cards">
           {products.map((p) => (

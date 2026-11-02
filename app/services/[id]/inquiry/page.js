@@ -5,5 +5,5 @@ import { notFound } from 'next/navigation';
 export default async function ServiceInquiry({ params }) {
   const s = await getService(params.id);
   if (!s) return notFound();
-  return (<><h1>Service Inquiry</h1><p>Service: <strong>{s.title}</strong> — neeche form bharein, hum aapko call/WhatsApp par contact karenge.</p><InquiryForm serviceId={s.id} serviceTitle={s.title} /></>);
+  return (<><h1>Service Inquiry</h1><p>Service: <strong>{s.title}</strong> — fill in the form below and we will contact you by phone or WhatsApp.</p><InquiryForm serviceId={s.id} serviceTitle={s.title} /></>);
 }

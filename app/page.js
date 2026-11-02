@@ -10,8 +10,8 @@ export default async function Home() {
       <section className="hero">
         <div className="hero-text">
           <span className="hero-eyebrow">Trusted Online Service Centre</span>
-          <h1>Government aur digital services, aasan aur surakshit tareeke se</h1>
-          <p className="hero-lead">Hum aapki madad karte hain — government job form bharna, admit card download karna, result check karna, scholarship aur exam form bharna.</p>
+          <h1>Government and digital services, made easy and secure</h1>
+          <p className="hero-lead">We help you with government job forms, admit card downloads, result checks, and scholarship and exam forms.</p>
           <ul className="hero-checks">
             <li>Government Job Form Apply</li>
             <li>Admit Card &amp; Result Download</li>
@@ -19,11 +19,11 @@ export default async function Home() {
             <li>Online Document Services</li>
           </ul>
           <div className="hero-actions">
-            <a className="btn" href="/services">View All Services / सेवाएँ देखें</a>
-            <a className="btn teal" href={whatsappLink('Namaste, mujhe service ke baare me jaankari chahiye.')}>WhatsApp par baat karein</a>
+            <a className="btn" href="/services">View All Services</a>
+            <a className="btn teal" href={whatsappLink('Hello, I would like information about your services.')}>Chat on WhatsApp</a>
             <a className="btn outline" href="/contact">Contact Us</a>
           </div>
-          <p className="muted">Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a> · WhatsApp: <a href={whatsappLink('Namaste, mujhe service ke baare me jaankari chahiye.')}>Chat karein</a></p>
+          <p className="muted">Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a> · WhatsApp: <a href={whatsappLink('Hello, I would like information about your services.')}>Chat now</a></p>
         </div>
         <div className="hero-media">
           <img src="/shop.jpeg" alt="CHANDRABHUSHAN ONLINE shop" />
@@ -31,23 +31,23 @@ export default async function Home() {
       </section>
 
       <section className="trust" aria-label="Service information">
-        <div className="trust-item"><span className="trust-icon" aria-hidden="true">📞</span><div><strong>Call karein</strong><span><a href={`tel:${SITE.phone}`}>{SITE.phone}</a></span></div></div>
-        <div className="trust-item"><span className="trust-icon" aria-hidden="true">🕘</span><div><strong>Open timing</strong><span>{SITE.hours}</span></div></div>
-        <div className="trust-item"><span className="trust-icon" aria-hidden="true">🇮🇳</span><div><strong>PAN India</strong><span>Online services, kahi se bhi</span></div></div>
+        <div className="trust-item"><span className="trust-icon" aria-hidden="true">📞</span><div><strong>Call us</strong><span><a href={`tel:${SITE.phone}`}>{SITE.phone}</a></span></div></div>
+        <div className="trust-item"><span className="trust-icon" aria-hidden="true">🕘</span><div><strong>Open hours</strong><span>{SITE.hours}</span></div></div>
+        <div className="trust-item"><span className="trust-icon" aria-hidden="true">🇮🇳</span><div><strong>PAN India</strong><span>Online services, from anywhere</span></div></div>
       </section>
 
       <section className="section">
-        <h2>Hum kya karte hain</h2>
+        <h2>What we do</h2>
         <div className="cards">
-          <div className="card"><h3>📄 Online Forms</h3><p>Government job forms, exam forms aur applications bharne me poori madad.</p></div>
-          <div className="card"><h3>🛡️ Trusted Service</h3><p>Har kaam dhyaan se, sahi documents ke saath, aur time par.</p></div>
-          <div className="card"><h3>🎧 Expert Support</h3><p>Phone, email aur WhatsApp par friendly support — {SITE.hours}.</p></div>
+          <div className="card"><h3>📄 Online Forms</h3><p>Full help with government job forms, exam forms, and applications.</p></div>
+          <div className="card"><h3>🛡️ Trusted Service</h3><p>Every job is done carefully, with the right documents, and on time.</p></div>
+          <div className="card"><h3>🎧 Expert Support</h3><p>Friendly support by phone, email, and WhatsApp — {SITE.hours}.</p></div>
         </div>
       </section>
 
       <section className="section">
         <h2>Latest Services &amp; Updates</h2>
-        {!isSupabaseConfigured() && <p className="alert">Database abhi connect nahi hai. Supabase set hone ke baad yahan latest services dikhengi.</p>}
+        {!isSupabaseConfigured() && <p className="alert">The database is not connected yet. The latest services will appear here once Supabase is set up.</p>}
         {latest.length === 0 ? (
           <div className="empty"><strong>No services yet.</strong><span>Check back soon!</span></div>
         ) : (
@@ -70,13 +70,13 @@ export default async function Home() {
       </section>
 
       <section className="section">
-        <h2>Kaise kaam hota hai?</h2>
+        <h2>How does it work?</h2>
         <div className="steps">
-          <div className="step"><span className="step-num">1</span><h3>Service chunein</h3><p>Apni zaroorat ke hisab se service select karein.</p></div>
-          <div className="step"><span className="step-num">2</span><h3>Inquiry form bharein ya WhatsApp karein</h3><p>Form bharein ya seedha WhatsApp par baat karein.</p></div>
-          <div className="step"><span className="step-num">3</span><h3>Documents dein</h3><p>Documents dein, hum form bharne me madad karenge.</p></div>
+          <div className="step"><span className="step-num">1</span><h3>Choose a service</h3><p>Select the service that matches your need.</p></div>
+          <div className="step"><span className="step-num">2</span><h3>Fill in the inquiry form or WhatsApp us</h3><p>Fill in the form or chat with us directly on WhatsApp.</p></div>
+          <div className="step"><span className="step-num">3</span><h3>Share your documents</h3><p>Share your documents and we will help you fill in the form.</p></div>
         </div>
-        <p className="muted">Note: Hum koi government department nahi hain. Hum ek local service centre hain jo online form bharne me madad karta hai.</p>
+        <p className="muted">Note: We are not a government department. We are a local service centre that helps you fill in online forms.</p>
       </section>
     </>
   );

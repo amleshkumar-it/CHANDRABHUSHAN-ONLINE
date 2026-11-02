@@ -11,7 +11,7 @@ export default async function Gallery() {
           <div className="card" key={p.id}><a href={`/products/${p.id}`}><img src={p.image_url} alt={p.name} /></a><p>{p.name}</p></div>
         ))}
       </div>
-      {products.length === 0 && <p className="muted">Product photos Supabase me add hone ke baad yahan dikhengi.</p>}
+      {products.length === 0 && <p className="muted">Product photos will appear here once they are added in Supabase.</p>}
     </>
   );
 }

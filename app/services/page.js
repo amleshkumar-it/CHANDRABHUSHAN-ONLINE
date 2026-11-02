@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { getServices, isSupabaseConfigured } from '../../lib/supabase';
-import { CATEGORIES, CATEGORY_HINDI, serviceStatus, daysLeft, formatDate } from '../../lib/site';
+import { CATEGORIES, serviceStatus, daysLeft, formatDate } from '../../lib/site';
 
 export default async function ServicesPage({ searchParams }) {
   const category = searchParams?.category || '';
@@ -8,11 +8,11 @@ export default async function ServicesPage({ searchParams }) {
   const services = category ? all.filter((s) => s.category === category) : all;
   return (
     <>
-      <h1>Services &amp; Latest Updates / सेवाएँ</h1>
-      <p>Category chunein: <a href="/services">All</a>{' '}
-        {CATEGORIES.map((c) => <span key={c}> · <a href={`/services?category=${encodeURIComponent(c)}`}>{c} ({CATEGORY_HINDI[c]})</a></span>)}
+      <h1>Services &amp; Latest Updates</h1>
+      <p>Choose a category: <a href="/services">All</a>{' '}
+        {CATEGORIES.map((c) => <span key={c}> · <a href={`/services?category=${encodeURIComponent(c)}`}>{c}</a></span>)}
       </p>
-      {!isSupabaseConfigured() && <p className="alert">Database abhi connect nahi hai, isliye koi service list nahi dikh rahi. Supabase set hone ke baad services yahan dikhengi.</p>}
+      {!isSupabaseConfigured() && <p className="alert">The database is not connected yet, so no services are shown here. Services will appear here once Supabase is set up.</p>}
       {services.length === 0 ? <p>No services yet. Check back soon!</p> : (
         <div className="cards">
           {services.map((s) => {

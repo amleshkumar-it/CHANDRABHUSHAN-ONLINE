@@ -12,7 +12,7 @@ export default async function ProductDetail({ params }) {
       {p.image_url && <img src={p.image_url} alt={p.name} style={{ width: '100%', maxHeight: 360, objectFit: 'cover', borderRadius: 12 }} />}
       <p>{p.description}</p>
       {p.price != null && <p><strong>Price: ₹{p.price}</strong></p>}
-      <p><a className="btn" href={whatsappLink(`Namaste, mujhe "${p.name}" product ke baare me jaankari chahiye.`)}>Enquire on WhatsApp</a> · Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a></p>
+      <p><a className="btn" href={whatsappLink(`Hello, I would like information about the "${p.name}" product.`)}>Enquire on WhatsApp</a> · Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a></p>
     </>
   );
 }
