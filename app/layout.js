@@ -1,6 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
+import Image from 'next/image';
 import { MessageCircle, Search } from 'lucide-react';
 import { SITE, whatsappLink } from '../lib/site';
 import ThemeToggle from '../components/ThemeToggle';
@@ -23,11 +24,9 @@ export default function RootLayout({ children }) {
         <script dangerouslySetInnerHTML={{ __html: "(function(){try{var t=localStorage.getItem('cbo-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();" }} />
         <header id="top" className="bg-[var(--paper)] border-b border-[var(--line)] py-3.5">
           <div className="max-w-[1160px] mx-auto px-4 flex gap-6 items-center justify-between flex-wrap">
-            <Link className="flex items-center gap-3 text-[var(--ink)] no-underline hover:no-underline" href="/">
-              <span className="w-10 h-10 sm:w-12 sm:h-12 flex-none inline-flex items-center justify-center bg-tealBrand text-white rounded-lg text-xl sm:text-2xl font-extrabold" aria-hidden="true">C</span>
-              <span className="flex flex-col leading-tight">
-                <span className="text-[1.3rem] sm:text-[1.55rem] font-extrabold tracking-tight text-navy dark:text-white leading-none">CHANDRABHUSHAN <span className="text-tealBrand">ONLINE</span></span>
-                <span className="text-xs sm:text-sm text-[var(--muted)] font-normal">{SITE.tagline}</span>
+            <Link className="flex items-center text-[var(--ink)] no-underline hover:no-underline" href="/" aria-label="CHANDRABHUSHAN ONLINE - Home">
+              <span className="bg-white rounded-lg p-1 inline-flex">
+                <Image src="/logo.png" alt="CHANDRABHUSHAN ONLINE" width={1200} height={400} priority className="h-11 sm:h-[52px] w-auto" />
               </span>
             </Link>
             <div className="flex gap-3 items-center flex-wrap w-full lg:w-auto">
