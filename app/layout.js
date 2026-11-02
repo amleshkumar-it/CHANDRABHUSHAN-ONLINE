@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { MessageCircle, Search } from 'lucide-react';
 import { SITE, whatsappLink } from '../lib/site';
 import ThemeToggle from '../components/ThemeToggle';
+import MobileNav from '../components/MobileNav';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -13,7 +14,6 @@ export const metadata = {
   description: 'Government forms, jobs, admit cards, results and scholarships — help with online services from CHANDRABHUSHAN ONLINE.',
 };
 
-const navLink = 'text-white font-bold text-[0.95rem] px-4 py-3 whitespace-nowrap no-underline inline-flex items-center gap-1.5 hover:bg-navyLight hover:no-underline';
 const footerLink = 'text-slate-200 no-underline hover:text-white hover:underline';
 
 export default function RootLayout({ children }) {
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
           <div className="max-w-[1160px] mx-auto px-4 flex gap-6 items-center justify-between flex-wrap">
             <Link className="flex items-center text-[var(--ink)] no-underline hover:no-underline" href="/" aria-label="CHANDRABHUSHAN ONLINE - Home">
               <span className="bg-white rounded-lg p-1 inline-flex">
-                <Image src="/logo.png" alt="CHANDRABHUSHAN ONLINE" width={1200} height={400} priority className="h-11 sm:h-[52px] w-auto" />
+                <Image src="/logo.png" alt="CHANDRABHUSHAN ONLINE" width={1200} height={400} priority className="h-14 sm:h-16 w-auto" />
               </span>
             </Link>
             <div className="flex gap-3 items-center flex-wrap w-full lg:w-auto">
@@ -39,13 +39,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </header>
-        <nav className="sticky top-0 z-40 bg-navy shadow-md" aria-label="Main navigation">
-          <div className="max-w-[1160px] mx-auto px-4 flex overflow-x-auto">
-            <Link href="/" className={`${navLink} bg-navyLight`}>Home</Link><Link href="/about" className={navLink}>About</Link><Link href="/services" className={navLink}>Services</Link>
-            <Link href="/products" className={navLink}>Products</Link><Link href="/gallery" className={navLink}>Gallery</Link><Link href="/contact" className={navLink}>Contact</Link><Link href="/admin" className={navLink}>Admin</Link>
-            <a className={`${navLink} ml-auto`} href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={16} aria-hidden="true" /> WhatsApp</a>
-          </div>
-        </nav>
+        <MobileNav />
         <main className="wrap">{children}</main>
         <footer className="bg-navy text-slate-300 mt-12 pt-8">
           <p className="max-w-[1160px] mx-auto mb-6 px-4 text-slate-400 text-sm">CHANDRABHUSHAN ONLINE is an independent service centre and is not affiliated with any government department. Always verify information on the official website before applying.</p>
