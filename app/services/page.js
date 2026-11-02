@@ -6,8 +6,17 @@ import ServiceIcon from '../../components/ServiceIcon';
 
 export default async function ServicesPage({ searchParams }) {
   const category = searchParams?.category || '';
+  const q = (searchParams?.q || '').trim();
   const all = await getServices();
-  const services = category ? all.filter((s) => s.category === category) : all;
+  let services = category ? all.filter((s) => s.category === category) : all;
+  if (q) {
+    const needle = q.toLowerCase();
+    services = services.filter((s) =>
+      (s.title || '').toLowerCase().includes(needle) ||
+      (s.short_description || '').toLowerCase().includes(needle) ||
+      (s.full_description || '').toLowerCase().includes(needle));
+  }
+  const catHref = (c) => c ? `/services?category=${encodeURIComponent(c)}${q ? `&q=${encodeURIComponent(q)}` : ''}` : `/services${q ? `?q=${encodeURIComponent(q)}` : ''}`;
   return (
     <>
       <div className="page-head">
@@ -15,9 +24,17 @@ export default async function ServicesPage({ searchParams }) {
         <h1>Services &amp; Latest Updates</h1>
         <p>Latest updates in one place — jobs, admit cards, results, forms and scholarships. Use a category to narrow the list, then open a card for dates, documents and the official link. Always verify on the official website before applying.</p>
       </div>
+      <form className="search-form" action="/services" method="get" role="search">
+        {category && <input type="hidden" name="category" value={category} />}
+        <label className="sr-only" htmlFor="services-search">Search services</label>
+        <input id="services-search" type="search" name="q" defaultValue={q} placeholder="Search jobs, admit cards, results…" aria-label="Search services" />
+        <button className="btn small" type="submit">Search</button>
+        {q && <a className="btn small outline" href={catHref(category)}>Clear search</a>}
+      </form>
+      {q && <p className="search-results">Search results for “{q}” — {services.length} service{services.length === 1 ? '' : 's'} found.</p>}
       <nav className="filters" aria-label="Filter services by category">
-        <a href="/services" className={!category ? 'active' : ''}>All</a>
-        {CATEGORIES.map((c) => <a key={c} href={`/services?category=${encodeURIComponent(c)}`} className={category === c ? 'active' : ''}>{c}</a>)}
+        <a href={catHref('')} className={!category ? 'active' : ''}>All</a>
+        {CATEGORIES.map((c) => <a key={c} href={catHref(c)} className={category === c ? 'active' : ''}>{c}</a>)}
       </nav>
       {!isSupabaseConfigured() && <p className="alert">The database is not connected yet, so no services are shown here. Services will appear here once Supabase is set up.</p>}
       {services.length === 0 ? <div className="empty"><strong>No services yet.</strong><span>Check back soon!</span></div> : (

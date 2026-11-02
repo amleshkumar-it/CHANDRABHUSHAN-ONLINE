@@ -1,71 +1,51 @@
 export const revalidate = 60;
 import { ArrowRight, ShieldCheck, FileCheck, Clock, MessageCircle, Phone, Search, ClipboardList, Bell } from 'lucide-react';
-import { getServices, isSupabaseConfigured } from '../lib/supabase';
-import { SITE, CATEGORIES, serviceStatus, daysLeft, formatDate, whatsappLink } from '../lib/site';
+import { getServices } from '../lib/supabase';
+import { SITE, CATEGORIES, serviceStatus, formatDate, whatsappLink } from '../lib/site';
 import ServiceIcon from '../components/ServiceIcon';
 
-function statusBadges(s) {
-  const status = serviceStatus(s); const left = daysLeft(s);
-  return (
-    <span className="bento-meta">
-      <span className={`badge ${status}`}>{status}</span>
-      {status === 'Active' && left !== null && left <= 7 && <span className="badge deadline">Last date in {left} day{left === 1 ? '' : 's'} — {formatDate(s.end_date)}</span>}
-      {s.end_date && <span className="badge">Last date: {formatDate(s.end_date)}</span>}
-    </span>
-  );
+function dateLabel(s) {
+  if (s.end_date) return `Last date: ${formatDate(s.end_date)}`;
+  if (s.start_date) return `Start: ${formatDate(s.start_date)}`;
+  return null;
 }
 
 export default async function Home() {
   const services = await getServices();
   const byCategory = {};
   for (const s of services) { (byCategory[s.category] = byCategory[s.category] || []).push(s); }
-  const presentCategories = Object.keys(byCategory);
   return (
     <>
-      {/* ── Hero: full-bleed band, content on the shared 1280px grid ── */}
-      <section className="hero reveal">
-        <div className="hero-inner">
-        <div className="hero-text">
-          <span className="hero-eyebrow">Trusted Online Service Centre</span>
-          <h1>Your Digital Services, Simplified.</h1>
-          <p className="hero-lead">All your essential online services, government applications and digital assistance in one trusted place.</p>
-          <div className="hero-actions">
-            <a className="btn" href="/services">Explore Services <ArrowRight size={18} aria-hidden="true" /></a>
-            <a className="btn teal" href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={18} aria-hidden="true" /> Contact on WhatsApp</a>
-          </div>
-          <p className="muted">Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a> · Open: {SITE.hours}</p>
-        </div>
-        <div className="hero-dashboard" aria-label="Latest services">
-          <div className="hero-dash-head">
-            <span><strong>Latest services</strong><span>From our live services list</span></span>
-            <span className="eyebrow">Live list</span>
-          </div>
-          {services.length === 0 ? (
-            <p className="muted">No services yet. Check back soon!</p>
-          ) : (
-            <div className="hero-dash-rows">
-              {services.slice(0, 4).map((s) => (
-                <a className="hero-service-row" href={`/services/${s.id}`} key={s.id}>
-                  <span className="hero-service-icon"><ServiceIcon category={s.category} size={22} /></span>
-                  <span className="hero-service-text"><strong>{s.title}</strong><span>{s.category}</span></span>
-                  <span className={`badge ${serviceStatus(s)}`}>{serviceStatus(s)}</span>
-                </a>
+      {/* ── Ticker: real live service titles only ── */}
+      <div className="ticker" aria-label="Latest Updates">
+        <span className="ticker-label">Latest Updates</span>
+        {services.length === 0 ? (
+          <span className="ticker-empty">No updates yet. Check back soon!</span>
+        ) : (
+          <div className="ticker-viewport">
+            <div className="ticker-track">
+              {[...services, ...services].map((s, i) => (
+                <a className="ticker-item" href={`/services/${s.id}`} key={`${s.id}-${i}`}>{s.title}</a>
               ))}
             </div>
-          )}
-          {services.length > 4 && <p className="muted" style={{ marginBottom: 0 }}><a href="/services">View all services</a></p>}
-          <div className="hero-dash-info">
-            <span><strong>CHANDRABHUSHAN ONLINE</strong><span>Open {SITE.hours} · Call <a href={`tel:${SITE.phone}`}>{SITE.phone}</a></span></span>
-            <a className="btn small teal" href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={16} aria-hidden="true" /> WhatsApp</a>
           </div>
+        )}
+      </div>
+
+      {/* ── Compact title band ── */}
+      <section className="title-band">
+        <h1>Your Digital Services, Simplified.</h1>
+        <p>All your essential online services, government applications and digital assistance in one trusted place.</p>
+        <div className="hero-actions">
+          <a className="btn" href="/services">Explore Services <ArrowRight size={18} aria-hidden="true" /></a>
+          <a className="btn whatsapp-btn" href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={18} aria-hidden="true" /> Contact on WhatsApp</a>
         </div>
-        </div>
+        <p className="muted">Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a> · Open: {SITE.hours}</p>
       </section>
 
-      {/* ── Latest Updates: portal-style columns, real services only ── */}
-      <section className="section reveal reveal-1" aria-label="Latest Updates">
+      {/* ── Latest Updates: bordered list boxes, real services only ── */}
+      <section className="section" aria-label="Latest Updates">
         <div className="section-head">
-          <span className="eyebrow">Latest Updates</span>
           <h2>Latest Updates</h2>
           <p>New jobs, admit cards and results, grouped by category. Open any item for dates, documents and the official link.</p>
         </div>
@@ -75,15 +55,12 @@ export default async function Home() {
             { cat: 'Admit Card', label: 'Admit Cards' },
             { cat: 'Result', label: 'Results' },
           ].map(({ cat, label }) => {
-            const items = (byCategory[cat] || []).slice(0, 4);
+            const items = (byCategory[cat] || []).slice(0, 5);
             return (
               <article className="updates-col" key={cat}>
-                <div className="updates-col-head">
-                  <span className="bento-icon"><ServiceIcon category={cat} size={22} /></span>
-                  <h3>{label}</h3>
-                </div>
+                <div className="updates-col-head"><h3>{label}</h3></div>
                 {items.length === 0 ? (
-                  <p className="muted">No updates yet. Check back soon!</p>
+                  <p className="updates-empty">No updates yet. Check back soon!</p>
                 ) : (
                   <ul className="updates-list">
                     {items.map((s) => (
@@ -91,68 +68,54 @@ export default async function Home() {
                         <a href={`/services/${s.id}`}>{s.title}</a>
                         <span className="updates-meta">
                           <span className={`badge ${serviceStatus(s)}`}>{serviceStatus(s)}</span>
-                          {s.end_date ? <span>Last date: {formatDate(s.end_date)}</span> : s.start_date ? <span>Start: {formatDate(s.start_date)}</span> : null}
+                          {dateLabel(s) && <span className="updates-date">{dateLabel(s)}</span>}
                         </span>
                       </li>
                     ))}
                   </ul>
                 )}
-                <p><a href={`/services?category=${encodeURIComponent(cat)}`}>View all {label} <ArrowRight size={16} aria-hidden="true" /></a></p>
+                <div className="updates-foot"><a href={`/services?category=${encodeURIComponent(cat)}`}>View all {label} <ArrowRight size={15} aria-hidden="true" /></a></div>
               </article>
             );
           })}
         </div>
       </section>
 
-      {/* ── Category boxes: real categories, real counts only ── */}
-      <section className="section reveal reveal-2" aria-label="Browse by category">
+      {/* ── Category boxes: latest items per category, real data only ── */}
+      <section className="section" aria-label="Browse by category">
         <div className="section-head">
-          <span className="eyebrow">Categories</span>
           <h2>Browse updates by category</h2>
-          <p>Pick a category to see only those updates. The number shown is the number of live services in that category right now.</p>
+          <p>Pick a category to see only those updates.</p>
         </div>
         <div className="category-boxes">
           {CATEGORIES.map((c) => {
-            const count = (byCategory[c] || []).length;
+            const items = (byCategory[c] || []).slice(0, 3);
             return (
-              <a className="category-box" href={`/services?category=${encodeURIComponent(c)}`} key={c}>
-                <span className="bento-icon"><ServiceIcon category={c} size={24} /></span>
-                <strong>{c}</strong>
-                <span>{count === 0 ? 'No updates yet' : `${count} service${count === 1 ? '' : 's'}`}</span>
-              </a>
+              <article className="category-box" key={c}>
+                <div className="category-box-head">
+                  <span className="category-box-title"><ServiceIcon category={c} size={20} /> {c}</span>
+                  <a className="view-all" href={`/services?category=${encodeURIComponent(c)}`}>View all</a>
+                </div>
+                {items.length === 0 ? (
+                  <p className="updates-empty">No updates yet.</p>
+                ) : (
+                  <ul className="category-box-list">
+                    {items.map((s) => (
+                      <li key={s.id}>
+                        {dateLabel(s) && <span className="category-box-date">{dateLabel(s)}</span>}
+                        <a href={`/services/${s.id}`}>{s.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </article>
             );
           })}
         </div>
       </section>
 
-      {/* ── Services: premium Bento Grid, real data only ── */}
-      <section className="section reveal reveal-2">
-        <div className="section-head">
-          <span className="eyebrow">Services</span>
-          <h2>Everything you need, in one place</h2>
-          <p>Government job forms, admit cards, results and more — browse the latest services and open any card for full details.</p>
-        </div>
-        {!isSupabaseConfigured() && <p className="alert">The database is not connected yet. The latest services will appear here once Supabase is set up.</p>}
-        {services.length === 0 ? (
-          <div className="empty"><strong>No services yet.</strong><span>Check back soon!</span></div>
-        ) : (
-          <div className="bento">
-            {services.map((s, i) => (
-              <article className={`bento-card${i === 0 ? ' wide' : ''}`} key={s.id}>
-                <span className="bento-icon"><ServiceIcon category={s.category} size={24} /></span>
-                {statusBadges(s)}
-                <h3>{s.title}</h3>
-                <p>{s.short_description}</p>
-                <a className="btn small outline" href={`/services/${s.id}`}>Explore Now <ArrowRight size={16} aria-hidden="true" /></a>
-              </article>
-            ))}
-          </div>
-        )}
-        <p style={{ marginTop: '1.5rem' }}><a className="btn" href="/services">View All Services</a></p>
-      </section>
-
       {/* ── Trust strip ── */}
-      <section className="trust reveal reveal-1" aria-label="Service information">
+      <section className="trust" aria-label="Service information">
         <div className="trust-item"><span className="trust-icon"><Phone size={22} aria-hidden="true" /></span><div><strong>Call us</strong><span><a href={`tel:${SITE.phone}`}>{SITE.phone}</a></span></div></div>
         <div className="trust-item"><span className="trust-icon"><Clock size={22} aria-hidden="true" /></span><div><strong>Open hours</strong><span>{SITE.hours}</span></div></div>
         <div className="trust-item"><span className="trust-icon"><ShieldCheck size={22} aria-hidden="true" /></span><div><strong>Careful, honest help</strong><span>No false promises — just clear guidance</span></div></div>
@@ -161,7 +124,6 @@ export default async function Home() {
       {/* ── Why choose us ── */}
       <section className="section">
         <div className="section-head">
-          <span className="eyebrow">Why choose us</span>
           <h2>Why choose CHANDRABHUSHAN ONLINE</h2>
           <p>Simple, careful help with online work — nothing hidden, nothing exaggerated.</p>
         </div>
@@ -176,7 +138,6 @@ export default async function Home() {
       {/* ── How it works ── */}
       <section className="section">
         <div className="section-head">
-          <span className="eyebrow">How it works</span>
           <h2>Three simple steps</h2>
         </div>
         <div className="steps">
@@ -190,7 +151,6 @@ export default async function Home() {
       {/* ── Frequently Asked Questions ── */}
       <section className="section">
         <div className="section-head">
-          <span className="eyebrow">FAQ</span>
           <h2>Frequently Asked Questions</h2>
           <p>Short, clear answers about how CHANDRABHUSHAN ONLINE works.</p>
         </div>
@@ -206,16 +166,15 @@ export default async function Home() {
       {/* ── Contact (real info + real flows, no fake form) ── */}
       <section className="section">
         <div className="section-head">
-          <span className="eyebrow">Contact</span>
           <h2>Talk to us</h2>
         </div>
         <div className="contact-grid">
           <div className="contact-card">
             <h3>CHANDRABHUSHAN ONLINE</h3>
             <p>Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a><br />Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />Open: {SITE.hours}</p>
-            <p><a className="btn teal" href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={18} aria-hidden="true" /> Contact on WhatsApp</a></p>
+            <p><a className="btn whatsapp-btn" href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={18} aria-hidden="true" /> Contact on WhatsApp</a></p>
           </div>
-          <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div className="card">
             <h3>Send an inquiry</h3>
             <p>Use the inquiry form and we will contact you by phone or WhatsApp. For a specific service, open it and use its own inquiry form.</p>
             <p><a className="btn" href="/contact">Open Inquiry Form</a> <a className="btn outline" href="/services">Browse Services</a></p>
