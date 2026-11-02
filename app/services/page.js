@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 import { ArrowRight } from 'lucide-react';
 import { getServices, isSupabaseConfigured } from '../../lib/supabase';
 import { CATEGORIES, serviceStatus, daysLeft, formatDate } from '../../lib/site';

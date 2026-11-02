@@ -12,10 +12,11 @@ export default async function AdminProducts() {
     <>
       <div className="page-head"><h1>Manage Products</h1></div><p><a href="/admin/dashboard">← Dashboard</a></p>
       <h2>Add New Product</h2>
-      <form action={saveProduct} className="card">
+      <form action={saveProduct} className="card" encType="multipart/form-data">
         <label>Name *</label><input name="name" required />
         <label>Description</label><textarea name="description" rows={4} />
         <label>Price (₹)</label><input name="price" type="number" step="0.01" />
+        <label>Upload Image (from your computer)</label><input name="image_file" type="file" accept="image/*" /><p className="muted">Choose a file to upload it to Supabase Storage (max 5 MB). If you choose a file, it replaces the Image URL below. Leave both blank for no image.</p>
         <label>Image URL</label><input name="image_url" type="url" />
         <p><button className="btn" type="submit">Save Product</button></p>
       </form>

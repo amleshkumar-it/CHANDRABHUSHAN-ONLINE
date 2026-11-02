@@ -1,5 +1,5 @@
 import { getProducts } from '../../lib/supabase';
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 export default async function Gallery() {
   const products = await getProducts();
   return (
@@ -8,7 +8,7 @@ export default async function Gallery() {
       <div className="cards">
         <div className="card"><img src="/shop.jpeg" alt="CHANDRABHUSHAN ONLINE Shop" /><p>Our shop — CHANDRABHUSHAN ONLINE</p></div>
         {products.filter((p) => p.image_url).map((p) => (
-          <div className="card" key={p.id}><a href={`/products/${p.id}`}><img src={p.image_url} alt={p.name} /></a><p>{p.name}</p></div>
+          <div className="card" key={p.id}><a href={`/products/${p.id}`}><img src={p.image_url} alt={p.name} loading="lazy" decoding="async" /></a><p>{p.name}</p></div>
         ))}
       </div>
       {products.length === 0 && <p className="muted">Product photos will appear here once they are added in Supabase.</p>}

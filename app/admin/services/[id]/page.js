@@ -12,7 +12,7 @@ export default async function EditService({ params }) {
   return (
     <>
       <div className="page-head"><h1>Edit Service</h1></div><p><a href="/admin/services">← Back to Services</a></p>
-      <form action={saveService} className="card">
+      <form action={saveService} className="card" encType="multipart/form-data">
         <input type="hidden" name="id" value={s.id} />
         <label>Title *</label><input name="title" required defaultValue={s.title} />
         <label>Category *</label><select name="category" required defaultValue={s.category}>{CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}</select>
@@ -23,6 +23,7 @@ export default async function EditService({ params }) {
         <label>Start Date</label><input name="start_date" type="date" defaultValue={s.start_date || ''} />
         <label>End Date</label><input name="end_date" type="date" defaultValue={s.end_date || ''} />
         <label>Official Apply Link</label><input name="apply_link" type="url" defaultValue={s.apply_link || ''} />
+        <label>Upload Image (from your computer)</label><input name="image_file" type="file" accept="image/*" /><p className="muted">Choose a file to upload it to Supabase Storage (max 5 MB). If you choose a file, it replaces the Image URL below. Leave both blank for no image.</p>
         <label>Image URL</label><input name="image_url" type="url" defaultValue={s.image_url || ''} />
         <p><button className="btn" type="submit">Update Service</button></p>
       </form>

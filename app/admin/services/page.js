@@ -13,7 +13,7 @@ export default async function AdminServices() {
     <>
       <div className="page-head"><h1>Manage Services</h1></div><p><a href="/admin/dashboard">← Dashboard</a></p>
       <h2>Add New Service</h2>
-      <form action={saveService} className="card">
+      <form action={saveService} className="card" encType="multipart/form-data">
         <label>Title *</label><input name="title" required />
         <label>Category *</label><select name="category" required>{CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}</select>
         <label>Short Description</label><textarea name="short_description" rows={3} />
@@ -23,6 +23,7 @@ export default async function AdminServices() {
         <label>Start Date</label><input name="start_date" type="date" />
         <label>End Date</label><input name="end_date" type="date" />
         <label>Official Apply Link</label><input name="apply_link" type="url" />
+        <label>Upload Image (from your computer)</label><input name="image_file" type="file" accept="image/*" /><p className="muted">Choose a file to upload it to Supabase Storage (max 5 MB). If you choose a file, it replaces the Image URL below. Leave both blank for no image.</p>
         <label>Image URL</label><input name="image_url" type="url" placeholder="https://... (Supabase Storage URL, or leave blank)" />
         <p><button className="btn" type="submit">Save Service</button></p>
       </form>

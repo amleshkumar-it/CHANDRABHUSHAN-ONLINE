@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 import { notFound } from 'next/navigation';
 import { CalendarClock, FileText, MessageCircle, ArrowRight } from 'lucide-react';
 import { getService } from '../../../lib/supabase';

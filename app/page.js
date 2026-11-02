@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 import { ArrowRight, ShieldCheck, FileCheck, Clock, MessageCircle, Phone, Search, ClipboardList, Bell } from 'lucide-react';
 import { getServices, isSupabaseConfigured } from '../lib/supabase';
 import { SITE, serviceStatus, daysLeft, formatDate, whatsappLink } from '../lib/site';
