@@ -1,7 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
-import { Phone, Mail, Clock, MessageCircle, Search } from 'lucide-react';
+import { MessageCircle, Search } from 'lucide-react';
 import { SITE, whatsappLink } from '../lib/site';
 import ThemeToggle from '../components/ThemeToggle';
 
@@ -16,21 +16,12 @@ const navLink = 'text-white font-bold text-[0.95rem] px-4 py-3 whitespace-nowrap
 const footerLink = 'text-slate-200 no-underline hover:text-white hover:underline';
 
 export default function RootLayout({ children }) {
-  const today = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   return (
     <html lang="en" className={inter.className}>
       <body>
         {/* Apply the saved / preferred theme before first paint to avoid a flash. */}
         <script dangerouslySetInnerHTML={{ __html: "(function(){try{var t=localStorage.getItem('cbo-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();" }} />
-        <div className="bg-black text-white py-1.5 text-[0.82rem]" id="top">
-          <div className="max-w-[1160px] mx-auto px-4 flex gap-5 flex-wrap justify-between items-center">
-            <span>{today}</span>
-            <span className="inline-flex items-center gap-1"><Clock size={13} aria-hidden="true" /> Open {SITE.hours}</span>
-            <span className="inline-flex items-center gap-1"><Phone size={13} aria-hidden="true" /> <a className="text-white font-semibold hover:text-amber-300" href={`tel:${SITE.phone}`}>{SITE.phone}</a></span>
-            <span className="inline-flex items-center gap-1"><Mail size={13} aria-hidden="true" /> <a className="text-white font-semibold hover:text-amber-300" href={`mailto:${SITE.email}`}>{SITE.email}</a></span>
-          </div>
-        </div>
-        <header className="bg-[var(--paper)] border-b border-[var(--line)] py-3.5">
+        <header id="top" className="bg-[var(--paper)] border-b border-[var(--line)] py-3.5">
           <div className="max-w-[1160px] mx-auto px-4 flex gap-6 items-center justify-between flex-wrap">
             <Link className="flex items-center gap-3 text-[var(--ink)] no-underline hover:no-underline" href="/">
               <span className="w-12 h-12 flex-none inline-flex items-center justify-center bg-tealBrand text-white rounded-lg text-2xl font-extrabold" aria-hidden="true">C</span>
