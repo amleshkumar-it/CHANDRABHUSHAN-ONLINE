@@ -6,6 +6,7 @@ import { MessageCircle, Search } from 'lucide-react';
 import { SITE, whatsappLink } from '../lib/site';
 import ThemeToggle from '../components/ThemeToggle';
 import MobileNav from '../components/MobileNav';
+import MobileMenu from '../components/MobileMenu';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
                 <Image src="/logo.png" alt="CHANDRABHUSHAN ONLINE" width={1200} height={400} priority className="h-14 sm:h-16 w-auto" />
               </span>
             </Link>
+            <MobileMenu />
             <div className="flex gap-3 items-center flex-wrap w-full lg:w-auto">
               <form className="flex items-center bg-[#eef1f5] dark:bg-[#1a2a44] border border-[var(--line)] rounded-full pl-3.5 pr-0.5 py-0.5 flex-1" action="/services" method="get" role="search">
                 <label className="sr-only" htmlFor="site-search">Search services</label>
