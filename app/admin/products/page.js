@@ -1,13 +1,22 @@
 export const dynamic = 'force-dynamic';
 import { redirect } from 'next/navigation';
-import { getAdminUser } from '../../../lib/supabase-server';
+import { getAdminUser, getServerSupabase } from '../../../lib/supabase-server';
 import { getProducts } from '../../../lib/supabase';
 import { saveProduct, deleteProduct } from '../actions';
 export default async function AdminProducts() {
   let user = null;
   try { user = await getAdminUser(); } catch { user = null; }
   if (!user) redirect('/admin');
-  const products = await getProducts();
+  // List page only shows the name, so fetch only id + name instead of
+  // every product's full description. Falls back to the full fetch.
+  let products = [];
+  try {
+    const sb = getServerSupabase();
+    if (sb) {
+      const { data, error } = await sb.from('products').select('id,name').order('created_at', { ascending: false });
+      products = error ? await getProducts() : (data || []);
+    } else { products = await getProducts(); }
+  } catch { products = await getProducts(); }
   return (
     <>
       <div className="page-head"><h1>Manage Products</h1></div><p><a href="/admin/dashboard">← Dashboard</a></p>

@@ -10,7 +10,7 @@ export default async function AdminInquiries() {
   try { sb = getServerSupabase(); } catch { sb = null; }
   let list = [];
   if (sb) {
-    try { const { data } = await sb.from('inquiries').select('*, services(title)').order('created_at', { ascending: false }); list = data || []; } catch { list = []; }
+    try { const { data } = await sb.from('inquiries').select('id,name,phone,email,message,is_read, services(title)').order('created_at', { ascending: false }); list = data || []; } catch { list = []; }
   }
   return (
     <>

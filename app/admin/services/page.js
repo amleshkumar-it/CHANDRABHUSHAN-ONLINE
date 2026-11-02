@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { redirect } from 'next/navigation';
-import { getAdminUser } from '../../../lib/supabase-server';
+import { getAdminUser, getServerSupabase } from '../../../lib/supabase-server';
 import { getServices } from '../../../lib/supabase';
 import { saveService, deleteService } from '../actions';
 import { CATEGORIES } from '../../../lib/site';
@@ -8,7 +8,18 @@ export default async function AdminServices() {
   let user = null;
   try { user = await getAdminUser(); } catch { user = null; }
   if (!user) redirect('/admin');
-  const services = await getServices();
+  // List page only shows title + category, so fetch only those 3 columns
+  // instead of the full text (full_description, documents, eligibility)
+  // of every service. Falls back to the full fetch if the server client
+  // is unavailable.
+  let services = [];
+  try {
+    const sb = getServerSupabase();
+    if (sb) {
+      const { data, error } = await sb.from('services').select('id,title,category').order('created_at', { ascending: false });
+      services = error ? await getServices() : (data || []);
+    } else { services = await getServices(); }
+  } catch { services = await getServices(); }
   return (
     <>
       <div className="page-head"><h1>Manage Services</h1></div><p><a href="/admin/dashboard">← Dashboard</a></p>

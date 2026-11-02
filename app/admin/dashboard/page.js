@@ -13,11 +13,16 @@ export default async function Dashboard() {
   let services = 0, products = 0, inquiries = 0, unread = 0, recent = [];
   if (sb) {
     try {
-      const s = await sb.from('services').select('id', { count: 'exact', head: true });
-      const p = await sb.from('products').select('id', { count: 'exact', head: true });
-      const i = await sb.from('inquiries').select('id', { count: 'exact', head: true });
-      const u = await sb.from('inquiries').select('id', { count: 'exact', head: true }).eq('is_read', false);
-      const r = await sb.from('inquiries').select('*').order('created_at', { ascending: false }).limit(10);
+      // Was 5 sequential database round-trips (one after another). All 5
+      // now run at the same time, so the dashboard waits for ONE trip
+      // instead of five — this was the main admin slowness.
+      const [s, p, i, u, r] = await Promise.all([
+        sb.from('services').select('id', { count: 'exact', head: true }),
+        sb.from('products').select('id', { count: 'exact', head: true }),
+        sb.from('inquiries').select('id', { count: 'exact', head: true }),
+        sb.from('inquiries').select('id', { count: 'exact', head: true }).eq('is_read', false),
+        sb.from('inquiries').select('id,name,phone,message,is_read').order('created_at', { ascending: false }).limit(10),
+      ]);
       services = s.count || 0; products = p.count || 0; inquiries = i.count || 0; unread = u.count || 0; recent = r.data || [];
     } catch {
       // Database blip: show the dashboard with zeros, do not crash it.
