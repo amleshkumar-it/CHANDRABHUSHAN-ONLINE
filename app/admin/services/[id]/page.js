@@ -11,7 +11,7 @@ export default async function EditService({ params }) {
   const s = await getService(params.id); if (!s) return notFound();
   return (
     <>
-      <h1>Edit Service</h1><p><a href="/admin/services">← Back to Services</a></p>
+      <div className="page-head"><h1>Edit Service</h1></div><p><a href="/admin/services">← Back to Services</a></p>
       <form action={saveService} className="card">
         <input type="hidden" name="id" value={s.id} />
         <label>Title *</label><input name="title" required defaultValue={s.title} />

@@ -26,7 +26,7 @@ export default async function Dashboard() {
   }
   return (
     <>
-      <h1>Admin Dashboard</h1><p>Logged in as: {user.email}</p>
+      <div className="page-head"><h1>Admin Dashboard</h1></div><p>Logged in as: {user.email}</p>
       <form action={logoutAdmin}><button className="btn outline small" type="submit">Logout</button></form>
       <p><a className="btn" href="/admin/services">Manage Services</a> <a className="btn" href="/admin/products">Manage Products</a> <a className="btn" href="/admin/inquiries">Manage Inquiries</a></p>
       <div className="cards">

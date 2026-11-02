@@ -10,7 +10,7 @@ export default async function AdminProducts() {
   const products = await getProducts();
   return (
     <>
-      <h1>Manage Products</h1><p><a href="/admin/dashboard">← Dashboard</a></p>
+      <div className="page-head"><h1>Manage Products</h1></div><p><a href="/admin/dashboard">← Dashboard</a></p>
       <h2>Add New Product</h2>
       <form action={saveProduct} className="card">
         <label>Name *</label><input name="name" required />

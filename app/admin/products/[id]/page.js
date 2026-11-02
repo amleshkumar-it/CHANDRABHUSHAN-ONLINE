@@ -10,7 +10,7 @@ export default async function EditProduct({ params }) {
   const p = await getProduct(params.id); if (!p) return notFound();
   return (
     <>
-      <h1>Edit Product</h1><p><a href="/admin/products">← Back to Products</a></p>
+      <div className="page-head"><h1>Edit Product</h1></div><p><a href="/admin/products">← Back to Products</a></p>
       <form action={saveProduct} className="card">
         <input type="hidden" name="id" value={p.id} />
         <label>Name *</label><input name="name" required defaultValue={p.name} />

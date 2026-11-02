@@ -11,7 +11,7 @@ export default async function AdminServices() {
   const services = await getServices();
   return (
     <>
-      <h1>Manage Services</h1><p><a href="/admin/dashboard">← Dashboard</a></p>
+      <div className="page-head"><h1>Manage Services</h1></div><p><a href="/admin/dashboard">← Dashboard</a></p>
       <h2>Add New Service</h2>
       <form action={saveService} className="card">
         <label>Title *</label><input name="title" required />

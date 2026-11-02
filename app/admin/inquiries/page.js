@@ -14,7 +14,7 @@ export default async function AdminInquiries() {
   }
   return (
     <>
-      <h1>Manage Inquiries</h1><p><a href="/admin/dashboard">← Dashboard</a></p>
+      <div className="page-head"><h1>Manage Inquiries</h1></div><p><a href="/admin/dashboard">← Dashboard</a></p>
       {list.length === 0 ? <p>No inquiries yet.</p> : (
         <div className="table-scroll"><table><thead><tr><th>Name</th><th>Phone / Email</th><th>Service</th><th>Message</th><th>Read?</th><th>Action</th></tr></thead><tbody>
           {list.map((q) => (
