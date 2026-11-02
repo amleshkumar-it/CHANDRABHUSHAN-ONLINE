@@ -7,10 +7,16 @@ function mustAdmin() { return getAdminUser(); }
 function num(v) { const n = Number(v); return isNaN(n) ? null : n; }
 function str(v) { return String(v || '').trim(); }
 
-export async function loginAdmin(formData) {
-  // Never throw from login: return a friendly error instead, so a Supabase
-  // outage shows "Login failed" in the form, not a server exception page.
-  // redirect() stays outside the try/catch on purpose (it throws by design).
+export async function loginAdmin(prevState, formData) {
+  // NOTE: LoginForm uses useFormState, so React calls this as
+  // (prevState, formData) — NOT (formData). The old single-arg version
+  // treated prevState (null) as formData and crashed on formData.get(),
+  // which is exactly the POST /admin 500 "Cannot read properties of null
+  // (reading 'get')" in the Vercel logs. Never throw from login: return a
+  // friendly error instead, so a Supabase outage shows "Login failed" in
+  // the form, not a server exception page. redirect() stays outside the
+  // try/catch on purpose (it throws by design).
+  if (!formData || typeof formData.get !== 'function') return { ok: false, error: 'Login form data missing. Please try again.' };
   let sb = null;
   try { sb = getServerSupabase(); } catch { sb = null; }
   if (!sb) return { ok: false, error: 'Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel, and ADMIN_EMAILS.' };
