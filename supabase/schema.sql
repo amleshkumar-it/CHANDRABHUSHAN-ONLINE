@@ -1,0 +1,63 @@
+-- CHANDRABHUSHAN ONLINE — Supabase schema
+-- Run this in Supabase Dashboard → SQL Editor, in order.
+-- No real secrets are in this file.
+
+create table if not exists public.products (
+  id bigint generated always as identity primary key,
+  name text not null,
+  description text default '',
+  price numeric,
+  image_url text,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.services (
+  id bigint generated always as identity primary key,
+  title text not null,
+  category text not null check (category in ('Job','Admit Card','Form','Result','Scholarship')),
+  short_description text default '',
+  full_description text default '',
+  required_documents text default '',
+  eligibility text default '',
+  start_date date,
+  end_date date,
+  apply_link text,
+  image_url text,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.inquiries (
+  id bigint generated always as identity primary key,
+  name text not null,
+  phone text not null,
+  email text,
+  message text not null,
+  service_id bigint references public.services(id) on delete set null,
+  is_read boolean not null default false,
+  created_at timestamptz not null default now()
+);
+
+-- Row Level Security
+alter table public.products enable row level security;
+alter table public.services enable row level security;
+alter table public.inquiries enable row level security;
+
+-- Public can READ products and services (the public website).
+create policy "public read products" on public.products for select using (true);
+create policy "public read services" on public.services for select using (true);
+
+-- Public can INSERT inquiries only (the inquiry form). No public read/update/delete.
+create policy "public insert inquiries" on public.inquiries for insert with check (true);
+
+-- Only authenticated users (admin, signed in via Supabase Auth) can write
+-- products/services, and only authenticated users can read/update inquiries.
+-- The app additionally checks ADMIN_EMAILS in every admin server action,
+-- so a signed-in non-admin still cannot use the admin panel.
+create policy "admin write products" on public.products for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+create policy "admin write services" on public.services for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+create policy "admin read inquiries" on public.inquiries for select using (auth.role() = 'authenticated');
+create policy "admin update inquiries" on public.inquiries for update using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+-- Optional: an admins table for future use. The app currently uses the
+-- ADMIN_EMAILS environment list instead, so this table is NOT required.
+-- create table if not exists public.admins (email text primary key, created_at timestamptz default now());
