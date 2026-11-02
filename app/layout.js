@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
           <div className="max-w-[1160px] mx-auto px-4 flex gap-6 items-center justify-between flex-wrap">
             <Link className="flex items-center text-[var(--ink)] no-underline hover:no-underline" href="/" aria-label="CHANDRABHUSHAN ONLINE - Home">
               <span className="bg-white rounded-lg p-1 inline-flex">
-                <Image src="/logo.png" alt="CHANDRABHUSHAN ONLINE" width={1200} height={400} priority className="h-14 sm:h-16 w-auto" />
+                <Image src="/logo-v2.png" alt="CHANDRABHUSHAN ONLINE" width={1200} height={431} priority className="h-14 sm:h-16 w-auto" />
               </span>
             </Link>
             <MobileMenu />
