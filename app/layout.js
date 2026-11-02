@@ -24,10 +24,10 @@ export default function RootLayout({ children }) {
         <header id="top" className="bg-[var(--paper)] border-b border-[var(--line)] py-3.5">
           <div className="max-w-[1160px] mx-auto px-4 flex gap-6 items-center justify-between flex-wrap">
             <Link className="flex items-center gap-3 text-[var(--ink)] no-underline hover:no-underline" href="/">
-              <span className="w-12 h-12 flex-none inline-flex items-center justify-center bg-tealBrand text-white rounded-lg text-2xl font-extrabold" aria-hidden="true">C</span>
+              <span className="w-10 h-10 sm:w-12 sm:h-12 flex-none inline-flex items-center justify-center bg-tealBrand text-white rounded-lg text-xl sm:text-2xl font-extrabold" aria-hidden="true">C</span>
               <span className="flex flex-col leading-tight">
-                <span className="text-[1.55rem] font-extrabold tracking-tight text-navy">CHANDRABHUSHAN <span className="text-tealBrand">ONLINE</span></span>
-                <span className="text-sm text-[var(--muted)] font-normal">{SITE.tagline}</span>
+                <span className="text-[1.3rem] sm:text-[1.55rem] font-extrabold tracking-tight text-navy leading-none">CHANDRABHUSHAN <span className="text-tealBrand">ONLINE</span></span>
+                <span className="text-xs sm:text-sm text-[var(--muted)] font-normal">{SITE.tagline}</span>
               </span>
             </Link>
             <div className="flex gap-3 items-center flex-wrap w-full lg:w-auto">
