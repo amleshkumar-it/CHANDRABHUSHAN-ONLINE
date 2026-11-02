@@ -1,4 +1,5 @@
 export const revalidate = 60;
+import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { getProducts, isSupabaseConfigured } from '../../lib/supabase';
 export default async function ProductsPage() {
@@ -11,7 +12,7 @@ export default async function ProductsPage() {
         <div className="cards">
           {products.map((p) => (
             <div className="card" key={p.id}>
-              {p.image_url && <img src={p.image_url} alt={p.name} loading="lazy" decoding="async" />}
+              {p.image_url && <div style={{ position: 'relative', height: 200, overflow: 'hidden', borderRadius: 8, marginBottom: '.75rem' }}><Image src={p.image_url} alt={p.name} fill style={{ objectFit: 'cover' }} sizes="(max-width: 640px) 100vw, 50vw" /></div>}
               <h3>{p.name}</h3><p>{p.description}</p>
               {p.price != null && <p><strong>₹{p.price}</strong></p>}
               <a className="btn small outline" href={`/products/${p.id}`}>View Details <ArrowRight size={16} aria-hidden="true" /></a>

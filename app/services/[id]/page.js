@@ -1,4 +1,5 @@
 export const revalidate = 60;
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { CalendarClock, FileText, MessageCircle, ArrowRight } from 'lucide-react';
 import { getService } from '../../../lib/supabase';
@@ -18,7 +19,7 @@ export default async function ServiceDetail({ params }) {
         <p><span className="badge">{s.category}</span> <span className={`badge ${status}`}>{status}</span>{' '}
           {status === 'Active' && left !== null && left <= 7 && <span className="badge deadline">Last date in {left} day{left === 1 ? '' : 's'}</span>}</p>
       </div>
-      {s.image_url && <img src={s.image_url} alt={s.title} style={{ width: '100%', maxHeight: 320, objectFit: 'cover', borderRadius: 20, marginBottom: '1.5rem' }} />}
+      {s.image_url && <div style={{ position: 'relative', height: 320, overflow: 'hidden', borderRadius: 20, marginBottom: '1.5rem' }}><Image src={s.image_url} alt={s.title} fill style={{ objectFit: 'cover' }} sizes="(max-width: 900px) 100vw, 1160px" /></div>}
       <p style={{ fontSize: '1.05rem' }}>{s.full_description}</p>
       <div className="cards" style={{ margin: '2rem 0' }}>
         <div className="card"><span className="bento-icon"><CalendarClock size={24} aria-hidden="true" /></span><h3>Important Dates</h3><p>Start date: {formatDate(s.start_date)}<br />Last date: {formatDate(s.end_date)}</p></div>

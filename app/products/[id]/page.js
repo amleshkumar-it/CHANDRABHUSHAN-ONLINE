@@ -1,4 +1,5 @@
 export const revalidate = 60;
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { MessageCircle } from 'lucide-react';
 import { getProduct } from '../../../lib/supabase';
@@ -10,7 +11,7 @@ export default async function ProductDetail({ params }) {
     <>
       <p><a href="/products">← Back to Products</a></p>
       <div className="page-head"><h1>{p.name}</h1>{p.price != null && <p><strong>Price: ₹{p.price}</strong></p>}</div>
-      {p.image_url && <img src={p.image_url} alt={p.name} style={{ width: '100%', maxHeight: 360, objectFit: 'cover', borderRadius: 20, marginBottom: '1.5rem' }} />}
+      {p.image_url && <div style={{ position: 'relative', height: 360, overflow: 'hidden', borderRadius: 20, marginBottom: '1.5rem' }}><Image src={p.image_url} alt={p.name} fill style={{ objectFit: 'cover' }} sizes="(max-width: 900px) 100vw, 1160px" /></div>}
       <p>{p.description}</p>
       <p><a className="btn teal" href={whatsappLink(`Hello, I would like information about the "${p.name}" product.`)}><MessageCircle size={18} aria-hidden="true" /> Enquire on WhatsApp</a> · Phone: <a href={`tel:${SITE.phone}`}>{SITE.phone}</a></p>
     </>

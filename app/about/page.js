@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ShieldCheck, FileCheck, MessageCircle } from 'lucide-react';
 import { SITE } from '../../lib/site';
 export default function About() {
@@ -9,7 +10,7 @@ export default function About() {
         <p>A local online service centre that makes government and digital work easier to understand and complete.</p>
       </div>
       <div className="hero-media" style={{ padding: 0, marginBottom: '2rem' }}>
-        <img src="/shop.jpeg" alt="CHANDRABHUSHAN ONLINE shop" style={{ width: '100%', maxHeight: 380, objectFit: 'cover', borderRadius: 20 }} />
+        <div style={{ position: 'relative', height: 380, overflow: 'hidden', borderRadius: 20 }}><Image src="/shop.jpeg" alt="CHANDRABHUSHAN ONLINE shop" fill style={{ objectFit: 'cover' }} sizes="(max-width: 900px) 100vw, 1160px" priority /></div>
       </div>
       <p>CHANDRABHUSHAN ONLINE is a local online service centre. People often find government and digital work difficult online — how to fill in a form, which documents are needed, and when the last date is. That is exactly what we help with.</p>
       <section className="section">
