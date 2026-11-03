@@ -26,11 +26,11 @@ export default async function ServiceDetail({ params }) {
         {s.required_documents && <div className="card"><span className="bento-icon"><FileText size={24} aria-hidden="true" /></span><h3>Required Documents</h3><p style={{ whiteSpace: 'pre-line' }}>{s.required_documents}</p></div>}
       </div>
       {s.eligibility && <><h2>Eligibility</h2><p style={{ whiteSpace: 'pre-line' }}>{s.eligibility}</p></>}
-      <p>
-        {s.apply_link && <a className="btn outline" href={s.apply_link} target="_blank" rel="noopener">Official Apply Link</a>}{' '}
-        <a className="btn" href={`/services/${s.id}/inquiry`}>Contact to Fill Form <ArrowRight size={18} aria-hidden="true" /></a>{' '}
+      <div className="hero-actions">
+        {s.apply_link && <a className="btn outline" href={s.apply_link} target="_blank" rel="noopener">Official Apply Link</a>}
+        <a className="btn" href={`/services/${s.id}/inquiry`}>Contact to Fill Form <ArrowRight size={18} aria-hidden="true" /></a>
         <a className="btn teal" href={whatsappLink(`Hello, I would like information about the "${s.title}" service.`)}><MessageCircle size={18} aria-hidden="true" /> WhatsApp</a>
-      </p>
+      </div>
       <div className="alert"><strong>Important Instructions:</strong> Before filling in a form, please read the official notification carefully. Giving incorrect information may lead to the form being rejected.</div>
     </>
   );
