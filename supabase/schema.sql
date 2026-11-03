@@ -14,7 +14,7 @@ create table if not exists public.products (
 create table if not exists public.services (
   id bigint generated always as identity primary key,
   title text not null,
-  category text not null check (category in ('Job','Admit Card','Form','Result','Scholarship')),
+  category text not null check (category in ('Job','Admit Card','Form','Result','Scholarship','Yojana')),
   short_description text default '',
   full_description text default '',
   required_documents text default '',
@@ -57,6 +57,14 @@ create policy "admin write products" on public.products for all using (auth.role
 create policy "admin write services" on public.services for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
 create policy "admin read inquiries" on public.inquiries for select using (auth.role() = 'authenticated');
 create policy "admin update inquiries" on public.inquiries for update using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
+-- Migration (3 Nov 2026): 'Yojana' was added to the site's category list
+-- after the table was first created, but CREATE TABLE IF NOT EXISTS does
+-- not change an existing CHECK constraint, so Yojana saves were rejected
+-- by the database while every other category worked. Run these two lines
+-- in the SQL Editor on an existing database to allow Yojana.
+alter table public.services drop constraint if exists services_category_check;
+alter table public.services add constraint services_category_check check (category in ('Job','Admit Card','Form','Result','Scholarship','Yojana'));
 
 -- Optional: an admins table for future use. The app currently uses the
 -- ADMIN_EMAILS environment list instead, so this table is NOT required.
