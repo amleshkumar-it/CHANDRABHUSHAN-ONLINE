@@ -1,4 +1,4 @@
-export const revalidate = 60;
+export const revalidate = 300;
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { MessageCircle } from 'lucide-react';

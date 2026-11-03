@@ -11,10 +11,10 @@ export async function submitInquiry(prev, formData) {
   const email = clean(formData.get('email'));
   const message = clean(formData.get('message'));
   const service_id = clean(formData.get('service_id'));
-  if (name.length < 2) return { ok: false, error: 'Please enter your full name.' };
+  if (name.length < 2 || name.length > 100) return { ok: false, error: 'Please enter your full name.' };
   if (!/^[0-9+() -]{10,15}$/.test(phone)) return { ok: false, error: 'Please enter a valid phone number (10 digits).' };
-  if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return { ok: false, error: 'Please enter a valid email, or leave it blank.' };
-  if (message.length < 5) return { ok: false, error: 'Please write your message (at least 5 characters).' };
+  if (email && (email.length > 100 || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))) return { ok: false, error: 'Please enter a valid email, or leave it blank.' };
+  if (message.length < 5 || message.length > 2000) return { ok: false, error: 'Please write your message (at least 5 characters, max 2000).' };
   const sb = getPublicSupabase();
   if (!sb) return { ok: false, error: 'Database is not connected yet. Please contact us on WhatsApp instead — your message was NOT saved.' };
   const { error } = await sb.from('inquiries').insert({

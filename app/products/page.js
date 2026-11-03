@@ -1,4 +1,4 @@
-export const revalidate = 60;
+export const revalidate = 300;
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { getProducts, isSupabaseConfigured } from '../../lib/supabase';

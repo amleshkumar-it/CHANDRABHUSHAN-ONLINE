@@ -1,4 +1,4 @@
-export const revalidate = 60;
+export const revalidate = 300;
 import { ArrowRight, ShieldCheck, FileCheck, Clock, MessageCircle, Phone, Search, ClipboardList, Bell } from 'lucide-react';
 import { getServices } from '../lib/supabase';
 import { SITE, CATEGORIES, serviceStatus, formatDate, whatsappLink } from '../lib/site';

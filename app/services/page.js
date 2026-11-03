@@ -1,4 +1,4 @@
-export const revalidate = 60;
+export const revalidate = 300;
 import { ArrowRight } from 'lucide-react';
 import { getServices, isSupabaseConfigured } from '../../lib/supabase';
 import { CATEGORIES, serviceStatus, daysLeft, formatDate } from '../../lib/site';

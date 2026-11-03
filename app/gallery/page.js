@@ -1,5 +1,5 @@
 import Image from 'next/image';
-export const revalidate = 60;
+export const revalidate = 300;
 export default async function Gallery() {
   return (
     <>
