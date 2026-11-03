@@ -352,3 +352,5 @@ nav a{transition:background-color .15s ease}
 .wa{animation:cboPulse 3s ease-in-out infinite}
 
 .site-search-input::placeholder{color:var(--muted); opacity:1}
+
+.reveal-hidden{opacity:0}
