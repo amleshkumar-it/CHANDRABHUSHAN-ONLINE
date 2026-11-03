@@ -4,6 +4,8 @@ import { getAdminUser } from '../../../../lib/supabase-server';
 import { getService } from '../../../../lib/supabase';
 import { saveService } from '../../actions';
 import { CATEGORIES } from '../../../../lib/site';
+import SaveButton from '../../../../components/SaveButton';
+import CompressedImageInput from '../../../../components/CompressedImageInput';
 export default async function EditService({ params }) {
   let user = null;
   try { user = await getAdminUser(); } catch { user = null; }
@@ -23,9 +25,9 @@ export default async function EditService({ params }) {
         <label>Start Date</label><input name="start_date" type="date" defaultValue={s.start_date || ''} />
         <label>End Date</label><input name="end_date" type="date" defaultValue={s.end_date || ''} />
         <label>Official Apply Link</label><input name="apply_link" type="url" defaultValue={s.apply_link || ''} />
-        <label>Upload Image (from your computer)</label><input name="image_file" type="file" accept="image/*" /><p className="muted">Choose a file to upload it to Supabase Storage (max 5 MB). If you choose a file, it replaces the Image URL below. Leave both blank for no image.</p>
+        <label>Upload Image (from your computer)</label><CompressedImageInput /><p className="muted">Choose a file to upload it to Supabase Storage (max 5 MB). If you choose a file, it replaces the Image URL below. Leave both blank for no image.</p>
         <label>Image URL</label><input name="image_url" type="url" defaultValue={s.image_url || ''} />
-        <p><button className="btn" type="submit">Update Service</button></p>
+        <p><SaveButton label="Update Service" /></p>
       </form>
     </>
   );

@@ -4,6 +4,8 @@ import { getAdminUser, getServerSupabase } from '../../../lib/supabase-server';
 import { getServices } from '../../../lib/supabase';
 import { saveService, deleteService } from '../actions';
 import { CATEGORIES } from '../../../lib/site';
+import SaveButton from '../../../components/SaveButton';
+import CompressedImageInput from '../../../components/CompressedImageInput';
 export default async function AdminServices() {
   let user = null;
   try { user = await getAdminUser(); } catch { user = null; }
@@ -34,9 +36,9 @@ export default async function AdminServices() {
         <label>Start Date</label><input name="start_date" type="date" />
         <label>End Date</label><input name="end_date" type="date" />
         <label>Official Apply Link</label><input name="apply_link" type="url" />
-        <label>Upload Image (from your computer)</label><input name="image_file" type="file" accept="image/*" /><p className="muted">Choose a file to upload it to Supabase Storage (max 5 MB). If you choose a file, it replaces the Image URL below. Leave both blank for no image.</p>
+        <label>Upload Image (from your computer)</label><CompressedImageInput /><p className="muted">Choose a file to upload it to Supabase Storage (max 5 MB). If you choose a file, it replaces the Image URL below. Leave both blank for no image.</p>
         <label>Image URL</label><input name="image_url" type="url" placeholder="https://... (Supabase Storage URL, or leave blank)" />
-        <p><button className="btn" type="submit">Save Service</button></p>
+        <p><SaveButton label="Save Service" /></p>
       </form>
       <h2>Existing Services ({services.length})</h2>
       {services.map((s) => (
