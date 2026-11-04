@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { MessageCircle } from 'lucide-react';
 import { getShopService } from '../../../lib/supabase';
 import { SITE, whatsappLink } from '../../../lib/site';
+import PosterLightbox from '../../../components/PosterLightbox';
 
 export default async function ShopServiceDetail({ params }) {
   const s = await getShopService(params.id);
@@ -15,8 +16,8 @@ export default async function ShopServiceDetail({ params }) {
         <h1>{s.title}</h1>
         <p><span className="badge">{s.category}</span></p>
       </div>
-      {/* Full poster, never cropped: natural height so the whole image shows. */}
-      {s.image_url && <a href={s.image_url} target="_blank" rel="noopener" aria-label={`View full poster: ${s.title}`}><img src={s.image_url} alt={s.title} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 20, marginBottom: '.5rem' }} /></a>}
+      {/* Full poster on this page; clicking opens the on-site popup. */}
+      {s.image_url && <PosterLightbox imageUrl={s.image_url} title={s.title} variant="full" />}
       {s.image_url && <p className="muted" style={{ fontSize: '.85rem' }}>Click the poster to view it full size.</p>}
       {s.description && <p style={{ fontSize: '1.05rem', whiteSpace: 'pre-line' }}>{s.description}</p>}
       <div className="hero-actions">
