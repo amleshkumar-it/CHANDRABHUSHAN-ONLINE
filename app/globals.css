@@ -355,13 +355,10 @@ nav a{transition:background-color .15s ease}
 
 .reveal-hidden{opacity:0}
 
-/* ── Shop poster cards: small posters, 4 per row in each category, still
-   fully visible (never cropped). Fewer per row on smaller screens.
+/* ── Shop poster cards: responsive grid, up to 4 small posters per row in
+   each category, images fully visible (never cropped). auto-fit (not a
+   fixed 4 columns) is the key: with only 2 posters, the row stretches to
+   fill the full width instead of leaving half the row empty; on smaller
+   screens it drops to fewer columns automatically, down to 1 on phones.
    The higher-specificity selector beats the generic .cards media queries. */
-.cards.shop-cards{grid-template-columns:repeat(4,1fr)}
-@media(max-width:900px){
-  .cards.shop-cards{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:640px){
-  .cards.shop-cards{grid-template-columns:1fr}
-}
+.cards.shop-cards{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
