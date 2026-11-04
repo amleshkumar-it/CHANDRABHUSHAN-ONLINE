@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { getPublicSupabase, getServices, isSupabaseConfigured } from '../lib/supabase';
+import { getPublicSupabase, getServices, getShopService, isSupabaseConfigured } from '../lib/supabase';
 
 describe('public Supabase client without configuration', () => {
   beforeEach(() => {
@@ -12,5 +12,8 @@ describe('public Supabase client without configuration', () => {
   });
   it('returns an empty service list instead of crashing', async () => {
     await expect(getServices()).resolves.toEqual([]);
+  });
+  it('returns null for a shop service instead of crashing', async () => {
+    await expect(getShopService(1)).resolves.toBeNull();
   });
 });

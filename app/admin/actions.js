@@ -97,6 +97,7 @@ export async function saveShopService(formData) {
     const { error } = id ? await sb.from('shop_services').update(row).eq('id', id) : await sb.from('shop_services').insert(row);
     if (error) return { ok: false, error: error.message };
     revalidatePath('/hamari-sevayein'); revalidatePath('/admin/shop-services');
+    if (id) revalidatePath(`/hamari-sevayein/${id}`);
   } catch (e) { return { ok: false, error: e.message }; }
   redirect('/admin/shop-services');
 }

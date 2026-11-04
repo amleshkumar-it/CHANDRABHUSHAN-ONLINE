@@ -1,0 +1,28 @@
+export const revalidate = 300;
+import { notFound } from 'next/navigation';
+import { MessageCircle } from 'lucide-react';
+import { getShopService } from '../../../lib/supabase';
+import { SITE, whatsappLink } from '../../../lib/site';
+
+export default async function ShopServiceDetail({ params }) {
+  const s = await getShopService(params.id);
+  if (!s) return notFound();
+  return (
+    <>
+      <p><a href="/hamari-sevayein">← Back to Hamari Sevayein</a></p>
+      <div className="page-head">
+        <span className="eyebrow">Hamari Sevayein</span>
+        <h1>{s.title}</h1>
+        <p><span className="badge">{s.category}</span></p>
+      </div>
+      {/* Full poster, never cropped: natural height so the whole image shows. */}
+      {s.image_url && <img src={s.image_url} alt={s.title} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 20, marginBottom: '1.5rem' }} />}
+      {s.description && <p style={{ fontSize: '1.05rem', whiteSpace: 'pre-line' }}>{s.description}</p>}
+      <div className="hero-actions">
+        <a className="btn whatsapp-btn" href={whatsappLink(`Hello, I would like information about the "${s.title}" service.`)}><MessageCircle size={18} aria-hidden="true" /> Contact on WhatsApp</a>
+        <a className="btn outline" href="/hamari-sevayein">Back to Hamari Sevayein</a>
+      </div>
+      <p className="muted">Open: {SITE.hours}. Visit the shop or contact us on WhatsApp for this service.</p>
+    </>
+  );
+}
