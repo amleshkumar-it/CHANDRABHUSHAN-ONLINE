@@ -32,9 +32,19 @@ export default function PosterForm({ action, categories }) {
     if (!file) { setOcrStatus('Pehle poster image chuno.'); return; }
     setOcrStatus('Poster se text nikal raha hai… isme thoda time lag sakta hai (pehli baar).');
     try {
-      const ocrUrl = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.esm.min.js';
-      const mod = await import(/* webpackIgnore: true */ ocrUrl);
-      const worker = await mod.createWorker(['hin', 'eng']);
+      // Tesseract's browser build is a UMD script, not an ES module: a
+      // dynamic ESM import of it fails in the browser, which is why the
+      // first version of this button never worked live. Load it as a
+      // classic script tag and use the window.Tesseract global instead.
+      if (!window.Tesseract) {
+        await new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+          s.onload = resolve; s.onerror = () => reject(new Error('OCR script load nahi hua'));
+          document.head.appendChild(s);
+        });
+      }
+      const worker = await window.Tesseract.createWorker(['hin', 'eng']);
       const { data } = await worker.recognize(file);
       await worker.terminate();
       const text = String(data && data.text ? data.text : '').replace(/\n{3,}/g, '\n\n').trim();
@@ -43,8 +53,8 @@ export default function PosterForm({ action, categories }) {
       setCategory(suggestShopCategory(text));
       setDescription(text);
       setOcrStatus('Text nikal gaya hai. Category ka sujhaav upar aa gaya hai — galat lage to badal kar, title likh kar Save karo.');
-    } catch {
-      setOcrStatus('Text nahi nikal paya (network ya OCR load ki dikkat) — description manually likh kar bhi save kar sakte ho.');
+    } catch (e) {
+      setOcrStatus(`Text nahi nikal paya (${e && e.message ? e.message : 'OCR load ki dikkat'}) — description manually likh kar bhi save kar sakte ho.`);
     }
   }
 
