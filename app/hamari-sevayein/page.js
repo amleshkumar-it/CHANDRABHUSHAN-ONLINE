@@ -11,7 +11,7 @@ export default async function HamariSevayeinPage() {
       <div className="page-head">
         <span className="eyebrow">Hamari Sevayein</span>
         <h1>Hamari Sevayein</h1>
-        <p>CHANDRABHUSHAN ONLINE par milne wali sevayein — har category ka apna alag section hai. Kisi seva ke liye WhatsApp par sampark karein. Open: {SITE.hours}.</p>
+        <p>Ye sarkari form ya job ki list nahi hai — ye wo kaam hain jo CHANDRABHUSHAN ONLINE ki dukaan par hote hain (Banking, Ayushman Card, Certificate). Har category ka apna alag section hai, Banking sabse pehle. Kisi seva ke liye WhatsApp par sampark karein. Open: {SITE.hours}.</p>
       </div>
       {!isSupabaseConfigured() && <p className="alert">The database is not connected yet, so no services are shown here.</p>}
       {byCategory.length === 0 ? <div className="empty"><strong>Abhi koi seva nahi hai.</strong><span>Jaldi wapas aayein!</span></div> : byCategory.map((g) => (
