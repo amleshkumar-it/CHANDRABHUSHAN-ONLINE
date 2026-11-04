@@ -102,7 +102,7 @@ export async function saveShopService(formData) {
   redirect('/admin/shop-services');
 }
 export async function deleteShopService(formData) {
-  try { const sb = await adminClient(); await sb.from('shop_services').delete().eq('id', str(formData.get('id'))); revalidatePath('/hamari-sevayein'); } catch (e) { return { ok: false, error: e.message }; }
+  try { const sb = await adminClient(); const id = str(formData.get('id')); await sb.from('shop_services').delete().eq('id', id); revalidatePath('/hamari-sevayein'); if (id) revalidatePath(`/hamari-sevayein/${id}`); } catch (e) { return { ok: false, error: e.message }; }
   redirect('/admin/shop-services');
 }
 export async function deleteService(formData) {

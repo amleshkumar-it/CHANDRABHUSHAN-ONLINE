@@ -26,7 +26,10 @@ export default async function AdminShopServices() {
       {items.map((s) => (
         <div className="card" key={s.id}>
           <strong>{s.title}</strong> — {s.category}
-          <form action={deleteShopService}><input type="hidden" name="id" value={s.id} /><button className="btn danger small" type="submit">Delete</button></form>
+          <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap' }}>
+            <a className="btn small" href={`/admin/shop-services/${s.id}`}>Edit</a>
+            <form action={deleteShopService}><input type="hidden" name="id" value={s.id} /><button className="btn danger small" type="submit">Delete</button></form>
+          </div>
         </div>
       ))}
     </>

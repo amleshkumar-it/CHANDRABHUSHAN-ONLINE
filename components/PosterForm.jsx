@@ -12,13 +12,13 @@ import SaveButton from './SaveButton';
 // is the safety net: OCR on Hindi posters is never 100% accurate, so the
 // form never saves OCR output blindly. If OCR fails (no network, blocked
 // CDN), the admin can still type everything manually and save.
-export default function PosterForm({ action, categories }) {
+export default function PosterForm({ action, categories, initial }) {
   const fileRef = useRef(null);
   const [preview, setPreview] = useState('');
   const [ocrStatus, setOcrStatus] = useState('');
   const [extracted, setExtracted] = useState('');
-  const [category, setCategory] = useState(categories[0]);
-  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState((initial && initial.category) || categories[0]);
+  const [description, setDescription] = useState((initial && initial.description) || '');
 
   function onFile(e) {
     const file = e.target.files && e.target.files[0];
@@ -60,18 +60,23 @@ export default function PosterForm({ action, categories }) {
 
   return (
     <form action={action} className="card" encType="multipart/form-data">
-      <label>Poster Image *</label>
-      <input ref={fileRef} name="image_file" type="file" accept="image/*" required onChange={onFile} />
-      <p className="muted">Poster ki photo chuno (max 5 MB). WhatsApp status ka screenshot bhi chalega, lekin poster jitna saaf hoga text utna sahi niklega.</p>
+      {initial && initial.id && <input type="hidden" name="id" value={initial.id} />}
+      {/* Keeps the existing poster when editing without choosing a new file:
+          imageUrlFromForm prefers a new upload, else falls back to this. */}
+      {initial && initial.imageUrl && <input type="hidden" name="image_url" value={initial.imageUrl} />}
+      <label>Poster Image {initial ? '' : '*'}</label>
+      <input ref={fileRef} name="image_file" type="file" accept="image/*" required={!initial} onChange={onFile} />
+      <p className="muted">{initial ? 'Nayi photo chuno to poster badal jaayega; khaali chhoda to purani photo hi rahegi.' : 'Poster ki photo chuno (max 5 MB). WhatsApp status ka screenshot bhi chalega, lekin poster jitna saaf hoga text utna sahi niklega.'}</p>
+      {initial && initial.imageUrl && !preview && <p><img src={initial.imageUrl} alt="Current poster" style={{ maxWidth: '100%', height: 'auto', borderRadius: 8 }} /><br /><span className="muted">Current poster</span></p>}
       {preview && <p><img src={preview} alt="Poster preview" style={{ maxWidth: '100%', height: 'auto', borderRadius: 8 }} /></p>}
       <p><button className="btn outline" type="button" onClick={extractText}>Poster se Text Nikalo (Hindi + English)</button></p>
       {ocrStatus && <p className="muted">{ocrStatus}</p>}
       {extracted && (<><label>Poster se nikla text (check kar lo — galat ho sakta hai)</label><textarea rows={6} value={extracted} onChange={(e) => setExtracted(e.target.value)} readOnly={false} /></>)}
-      <label>Title *</label><input name="title" required placeholder="Jaise: Bank of Baroda se Paisa Nikasi" />
+      <label>Title *</label><input name="title" required defaultValue={(initial && initial.title) || ''} placeholder="Jaise: Bank of Baroda se Paisa Nikasi" />
       <label>Category *</label><select name="category" required value={category} onChange={(e) => setCategory(e.target.value)}>{categories.map((c) => <option key={c} value={c}>{c}</option>)}</select>
       <p className="muted">Category OCR ke sujhaav se bhari jaati hai, lekin final faisla tumhara hai — Banking ke poster Banking section me, Ayushman ke Ayushman section me.</p>
       <label>Description</label><textarea name="description" rows={5} value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Poster me jo seva likhi hai, wo yahan aayegi — OCR ke baad khud bhar jaayegi, ya manually likho." />
-      <p><SaveButton label="Save Shop Service" /></p>
+      <p><SaveButton label={initial ? 'Update Shop Service' : 'Save Shop Service'} /></p>
     </form>
   );
 }
