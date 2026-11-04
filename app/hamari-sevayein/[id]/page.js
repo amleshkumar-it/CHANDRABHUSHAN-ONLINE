@@ -16,7 +16,8 @@ export default async function ShopServiceDetail({ params }) {
         <p><span className="badge">{s.category}</span></p>
       </div>
       {/* Full poster, never cropped: natural height so the whole image shows. */}
-      {s.image_url && <img src={s.image_url} alt={s.title} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 20, marginBottom: '1.5rem' }} />}
+      {s.image_url && <a href={s.image_url} target="_blank" rel="noopener" aria-label={`View full poster: ${s.title}`}><img src={s.image_url} alt={s.title} style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 20, marginBottom: '.5rem' }} /></a>}
+      {s.image_url && <p className="muted" style={{ fontSize: '.85rem' }}>Click the poster to view it full size.</p>}
       {s.description && <p style={{ fontSize: '1.05rem', whiteSpace: 'pre-line' }}>{s.description}</p>}
       <div className="hero-actions">
         <a className="btn whatsapp-btn" href={whatsappLink(`Hello, I would like information about the "${s.title}" service.`)}><MessageCircle size={18} aria-hidden="true" /> Contact on WhatsApp</a>
