@@ -22,7 +22,7 @@ export default async function ServicesPage({ searchParams }) {
       <div className="page-head">
         <span className="eyebrow">Services</span>
         <h1>Services &amp; Latest Updates</h1>
-        <p>Latest updates in one place — jobs, admit cards, results, forms, scholarships and yojanas. Sarkari Jobs and Sarkari Yojana in the menu are shortcuts to parts of this same list; this page holds every Sarkari update. Use a category to narrow the list, then open a card for dates, documents and the official link. Always verify on the official website before applying.</p>
+        <p>Latest updates in one place — jobs, admit cards, results, forms, scholarships and yojanas, all on this one page. Use a category to narrow the list, then open a card for dates, documents and the official link. Always verify on the official website before applying.</p>
       </div>
       <form className="search-form" action="/services" method="get" role="search">
         {category && <input type="hidden" name="category" value={category} />}

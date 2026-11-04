@@ -26,8 +26,6 @@ export default function MobileMenu() {
       {open && (
         <div className="md:hidden w-full bg-navy rounded-lg px-2 py-1 flex flex-col">
           <Link href="/" className={mobileLink} onClick={close}>Home</Link>
-          <Link href="/services?category=Yojana" className={mobileLink} onClick={close}>Sarkari Yojana</Link>
-          <Link href="/services?category=Job" className={mobileLink} onClick={close}>Sarkari Jobs</Link>
           <Link href="/services" className={mobileLink} onClick={close}>Sarkari Updates</Link>
           <Link href="/hamari-sevayein" className={mobileLink} onClick={close}>Hamari Sevayein</Link>
           <Link href="/about" className={mobileLink} onClick={close}>About</Link>
