@@ -84,6 +84,26 @@ export async function saveService(formData) {
   } catch (e) { return { ok: false, error: e.message }; }
   redirect('/admin/services');
 }
+export async function saveShopService(formData) {
+  try {
+    const sb = await adminClient();
+    const id = str(formData.get('id'));
+    const row = {
+      title: str(formData.get('title')), category: str(formData.get('category')),
+      description: str(formData.get('description')),
+      image_url: await imageUrlFromForm(sb, formData, 'shop-services'),
+    };
+    if (!row.title || !row.category) return { ok: false, error: 'Title and category are required.' };
+    const { error } = id ? await sb.from('shop_services').update(row).eq('id', id) : await sb.from('shop_services').insert(row);
+    if (error) return { ok: false, error: error.message };
+    revalidatePath('/hamari-sevayein'); revalidatePath('/admin/shop-services');
+  } catch (e) { return { ok: false, error: e.message }; }
+  redirect('/admin/shop-services');
+}
+export async function deleteShopService(formData) {
+  try { const sb = await adminClient(); await sb.from('shop_services').delete().eq('id', str(formData.get('id'))); revalidatePath('/hamari-sevayein'); } catch (e) { return { ok: false, error: e.message }; }
+  redirect('/admin/shop-services');
+}
 export async function deleteService(formData) {
   try { const sb = await adminClient(); await sb.from('services').delete().eq('id', str(formData.get('id'))); revalidatePath('/services'); } catch (e) { return { ok: false, error: e.message }; }
   redirect('/admin/services');

@@ -26,6 +26,22 @@ create table if not exists public.services (
   created_at timestamptz not null default now()
 );
 
+-- Shop services for /hamari-sevayein (added 4 Nov 2026): poster-based cards
+-- for the shop's own services (Banking, Ayushman Card, Certificate, Other),
+-- kept separate from Sarkari services. Banking is its own section on the
+-- public page. Run this block in the SQL Editor on an existing database.
+create table if not exists public.shop_services (
+  id bigint generated always as identity primary key,
+  title text not null,
+  category text not null check (category in ('Banking','Ayushman Card','Certificate','Other')),
+  description text default '',
+  image_url text,
+  created_at timestamptz not null default now()
+);
+alter table public.shop_services enable row level security;
+create policy "public read shop_services" on public.shop_services for select using (true);
+create policy "admin write shop_services" on public.shop_services for all using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+
 create table if not exists public.inquiries (
   id bigint generated always as identity primary key,
   name text not null,

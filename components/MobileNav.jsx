@@ -10,7 +10,7 @@ export default function MobileNav() {
   return (
     <nav className="sticky top-0 z-40 bg-navy shadow-md hidden md:block" aria-label="Main navigation">
       <div className="max-w-[1160px] mx-auto px-4 flex overflow-x-auto">
-        <Link href="/" className={`${navLink} bg-navyLight`}>Home</Link><Link href="/services?category=Yojana" className={navLink}>Sarkari Yojana</Link><Link href="/services?category=Job" className={navLink}>Sarkari Jobs</Link><Link href="/about" className={navLink}>About</Link><Link href="/services" className={navLink}>Services</Link>
+        <Link href="/" className={`${navLink} bg-navyLight`}>Home</Link><Link href="/services?category=Yojana" className={navLink}>Sarkari Yojana</Link><Link href="/services?category=Job" className={navLink}>Sarkari Jobs</Link><Link href="/about" className={navLink}>About</Link><Link href="/hamari-sevayein" className={navLink}>Hamari Sevayein</Link><Link href="/services" className={navLink}>Services</Link>
         <Link href="/products" className={navLink}>Products</Link><Link href="/gallery" className={navLink}>Gallery</Link><Link href="/contact" className={navLink}>Contact</Link><Link href="/admin" className={navLink}>Admin</Link>
         <a className={`${navLink} ml-auto`} href={whatsappLink('Hello, I would like information about online services.')}><MessageCircle size={16} aria-hidden="true" /> WhatsApp</a>
       </div>
